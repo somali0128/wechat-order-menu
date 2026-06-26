@@ -1,0 +1,80 @@
+<view class="page menu-page">
+  <view class="hero">
+    <view>
+      <view class="hero-kicker">家庭点菜</view>
+      <view class="hero-title">今天想吃什么？</view>
+      <view class="hero-subtitle">先选菜，再核对食材，家人手机可同步收到订单。</view>
+    </view>
+    <view class="hero-badge">
+      <text class="hero-badge-number">{{cartCount}}</text>
+      <text>已选</text>
+    </view>
+  </view>
+
+  <view class="content">
+    <scroll-view class="category-list" scroll-y enhanced show-scrollbar="{{false}}">
+      <block wx:for="{{categories}}" wx:key="*this">
+        <button
+          class="category-item {{activeCategory === item ? 'active' : ''}}"
+          data-category="{{item}}"
+          bindtap="selectCategory"
+        >
+          {{item}}
+        </button>
+      </block>
+    </scroll-view>
+
+    <scroll-view class="dish-list" scroll-y enhanced show-scrollbar="{{false}}">
+      <block wx:for="{{filteredDishes}}" wx:key="id">
+        <view class="dish-card">
+          <view class="dish-cover tone-{{item.imageTone}}">
+            <text>{{item.initial}}</text>
+          </view>
+          <view class="dish-info">
+            <view class="dish-main">
+              <view class="dish-name">{{item.name}}</view>
+              <view class="dish-desc">{{item.description}}</view>
+              <view class="dish-meta">
+                <text>{{item.tag}}</text>
+                <text>{{item.time}}</text>
+              </view>
+            </view>
+            <view class="ingredients">
+              <block wx:for="{{item.ingredients}}" wx:key="*this" wx:for-item="ingredient">
+                <text>{{ingredient}}</text>
+              </block>
+            </view>
+            <view class="dish-bottom">
+              <view class="price">¥{{item.price}}</view>
+              <view class="stepper">
+                <button
+                  wx:if="{{item.quantity > 0}}"
+                  class="step-btn"
+                  data-id="{{item.id}}"
+                  bindtap="reduceDish"
+                >
+                  -
+                </button>
+                <text
+                  wx:if="{{item.quantity > 0}}"
+                  class="quantity"
+                >
+                  {{item.quantity}}
+                </text>
+                <button class="add-btn" data-id="{{item.id}}" bindtap="addDish">+</button>
+              </view>
+            </view>
+          </view>
+        </view>
+      </block>
+    </scroll-view>
+  </view>
+
+  <view class="cart-bar">
+    <view>
+      <view class="cart-title">{{cartCount ? '已选 ' + cartCount + ' 道' : '还没有选菜'}}</view>
+      <view class="cart-subtitle">{{cartCount ? '预计 ¥' + cartTotal : '挑几道菜开始采购确认'}}</view>
+    </view>
+    <button class="cart-btn" bindtap="goCart">去采购</button>
+  </view>
+</view>

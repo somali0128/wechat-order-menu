@@ -1,0 +1,49 @@
+<view class="page cart-page">
+  <view class="section-header">
+    <view>
+      <view class="section-title">已选菜品</view>
+      <view class="section-subtitle">确认今晚要做的菜</view>
+    </view>
+    <button class="secondary-btn add-more" bindtap="goMenu">加菜</button>
+  </view>
+
+  <view wx:if="{{cart.length}}" class="selected-list">
+    <block wx:for="{{cart}}" wx:key="id">
+      <view class="selected-item">
+        <view>
+          <view class="selected-name">{{item.name}}</view>
+          <view class="selected-desc">{{item.ingredientText}}</view>
+        </view>
+        <view class="selected-side">
+          <text>x{{item.quantity}}</text>
+          <button data-id="{{item.id}}" bindtap="removeDish">移除</button>
+        </view>
+      </view>
+    </block>
+  </view>
+
+  <view wx:else class="empty">
+    <view class="empty-title">还没有点菜</view>
+    <view class="empty-desc">回到菜单选几道菜，系统会自动整理采购清单。</view>
+    <button class="primary-btn" bindtap="goMenu">去选菜</button>
+  </view>
+
+  <view wx:if="{{cart.length}}" class="ingredient-panel">
+    <view class="section-title">食材采购确认</view>
+    <view class="section-subtitle">已勾选表示家里已有或已买齐</view>
+    <checkbox-group class="ingredient-list" bindchange="changeIngredient">
+      <label wx:for="{{ingredients}}" wx:key="name" class="ingredient-row">
+        <checkbox value="{{item.name}}" checked="{{item.checked}}" color="#1e88e5" />
+        <text>{{item.name}}</text>
+      </label>
+    </checkbox-group>
+  </view>
+
+  <view wx:if="{{cart.length}}" class="submit-bar">
+    <view>
+      <view class="submit-title">采购状态</view>
+      <view class="submit-subtitle">{{checkedIngredients.length}} / {{ingredients.length}} 项已确认</view>
+    </view>
+    <button class="primary-btn submit-btn" loading="{{submitting}}" bindtap="submitOrder">远程下单</button>
+  </view>
+</view>

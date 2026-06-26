@@ -1,0 +1,157 @@
+.cart-page {
+  display: flex;
+  flex-direction: column;
+  gap: 24rpx;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20rpx;
+}
+
+.section-title {
+  color: #1f2933;
+  font-size: 34rpx;
+  font-weight: 800;
+}
+
+.section-subtitle {
+  margin-top: 8rpx;
+  color: #7b8794;
+  font-size: 25rpx;
+}
+
+.add-more {
+  flex: 0 0 140rpx;
+}
+
+.selected-list,
+.ingredient-panel,
+.empty {
+  padding: 24rpx;
+  border-radius: 20rpx;
+  background: #ffffff;
+  box-shadow: 0 16rpx 40rpx rgba(38, 50, 56, 0.08);
+}
+
+.selected-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20rpx;
+  padding: 22rpx 0;
+  border-bottom: 2rpx solid #eef2f6;
+}
+
+.selected-item:first-child {
+  padding-top: 0;
+}
+
+.selected-item:last-child {
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.selected-name {
+  font-size: 30rpx;
+  font-weight: 800;
+}
+
+.selected-desc {
+  margin-top: 8rpx;
+  color: #7b8794;
+  font-size: 24rpx;
+  line-height: 1.45;
+}
+
+.selected-side {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 14rpx;
+  flex: 0 0 110rpx;
+  color: #ff8a1f;
+  font-weight: 800;
+}
+
+.selected-side button {
+  min-width: 92rpx;
+  height: 48rpx;
+  border-radius: 24rpx;
+  color: #7b8794;
+  background: #f3f6f9;
+  font-size: 23rpx;
+}
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+  align-items: stretch;
+  padding: 48rpx 32rpx;
+  text-align: center;
+}
+
+.empty-title {
+  font-size: 34rpx;
+  font-weight: 800;
+}
+
+.empty-desc {
+  color: #7b8794;
+  line-height: 1.55;
+}
+
+.ingredient-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18rpx;
+  margin-top: 24rpx;
+}
+
+.ingredient-row {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  min-height: 76rpx;
+  padding: 0 16rpx;
+  border: 2rpx solid #e5eff9;
+  border-radius: 16rpx;
+  background: #f8fbff;
+  font-weight: 700;
+}
+
+.submit-bar {
+  position: fixed;
+  right: 24rpx;
+  bottom: 34rpx;
+  left: 24rpx;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18rpx;
+  min-height: 116rpx;
+  padding: 20rpx 22rpx;
+  border-radius: 22rpx;
+  background: #17212b;
+  box-shadow: 0 16rpx 40rpx rgba(23, 33, 43, 0.22);
+}
+
+.submit-title {
+  color: #ffffff;
+  font-size: 30rpx;
+  font-weight: 800;
+}
+
+.submit-subtitle {
+  margin-top: 6rpx;
+  color: #cbd5df;
+  font-size: 24rpx;
+}
+
+.submit-btn {
+  flex: 0 0 190rpx;
+}

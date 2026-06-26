@@ -1,0 +1,150 @@
+.orders-page {
+  display: flex;
+  flex-direction: column;
+  gap: 24rpx;
+}
+
+.sync-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20rpx;
+  min-height: 146rpx;
+  padding: 26rpx;
+  border-radius: 20rpx;
+  color: #ffffff;
+}
+
+.sync-card.online {
+  background: linear-gradient(135deg, #1e88e5, #21b6a8);
+}
+
+.sync-card.offline {
+  background: linear-gradient(135deg, #ffb12f, #1e88e5);
+}
+
+.sync-title {
+  font-size: 34rpx;
+  font-weight: 800;
+}
+
+.sync-desc {
+  margin-top: 10rpx;
+  font-size: 25rpx;
+  line-height: 1.45;
+  opacity: 0.92;
+}
+
+.sync-dot {
+  flex: 0 0 26rpx;
+  width: 26rpx;
+  height: 26rpx;
+  border: 6rpx solid rgba(255, 255, 255, 0.44);
+  border-radius: 50%;
+  background: #ffffff;
+}
+
+.section-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.section-title {
+  font-size: 34rpx;
+  font-weight: 800;
+}
+
+.menu-btn {
+  flex: 0 0 132rpx;
+}
+
+.order-card,
+.empty {
+  padding: 24rpx;
+  border-radius: 20rpx;
+  background: #ffffff;
+  box-shadow: 0 16rpx 40rpx rgba(38, 50, 56, 0.08);
+}
+
+.order-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20rpx;
+}
+
+.order-title {
+  font-size: 32rpx;
+  font-weight: 800;
+}
+
+.order-time {
+  margin-top: 8rpx;
+  color: #7b8794;
+  font-size: 24rpx;
+}
+
+.status {
+  padding: 10rpx 16rpx;
+  border-radius: 999rpx;
+  color: #1e88e5;
+  background: #eff7ff;
+  font-size: 24rpx;
+  font-weight: 800;
+}
+
+.dish-line {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12rpx;
+  margin-top: 22rpx;
+}
+
+.dish-line text {
+  padding: 10rpx 14rpx;
+  border-radius: 12rpx;
+  color: #1f2933;
+  background: #fff3d6;
+  font-size: 24rpx;
+  font-weight: 700;
+}
+
+.ingredient-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10rpx;
+  margin-top: 20rpx;
+}
+
+.ingredient-summary text {
+  padding: 8rpx 12rpx;
+  border-radius: 12rpx;
+  font-size: 23rpx;
+}
+
+.ingredient-summary .ready {
+  color: #0f766e;
+  background: #e3fbf7;
+}
+
+.ingredient-summary .missing {
+  color: #b45309;
+  background: #fff0cf;
+}
+
+.empty {
+  color: #7b8794;
+  line-height: 1.55;
+  text-align: center;
+}
+
+.empty-title {
+  color: #1f2933;
+  font-size: 32rpx;
+  font-weight: 800;
+}
+
+.empty-desc {
+  margin-top: 10rpx;
+}

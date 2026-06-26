@@ -1,7 +1,7 @@
 <view class="page menu-page">
   <view class="hero">
     <view>
-      <view class="hero-kicker">家庭点菜</view>
+      <view class="hero-kicker">樾哥厨房</view>
       <view class="hero-title">今天想吃什么？</view>
       <view class="hero-subtitle">先选菜，再核对食材，家人手机可同步收到订单。</view>
     </view>
@@ -45,7 +45,6 @@
               </block>
             </view>
             <view class="dish-bottom">
-              <view class="price">¥{{item.price}}</view>
               <view class="stepper">
                 <button
                   wx:if="{{item.quantity > 0}}"
@@ -73,7 +72,7 @@
   <view class="cart-bar">
     <view>
       <view class="cart-title">{{cartCount ? '已选 ' + cartCount + ' 道' : '还没有选菜'}}</view>
-      <view class="cart-subtitle">{{cartCount ? '预计 ¥' + cartTotal : '挑几道菜开始采购确认'}}</view>
+      <view class="cart-subtitle">{{cartCount ? '准备核对食材' : '挑几道菜开始采购确认'}}</view>
     </view>
     <button class="cart-btn" bindtap="goCart">去采购</button>
   </view>

@@ -7,8 +7,7 @@ Page({
     dishes,
     filteredDishes: [],
     cart: [],
-    cartCount: 0,
-    cartTotal: 0
+    cartCount: 0
   },
 
   onLoad() {
@@ -72,12 +71,10 @@ Page({
   refreshCart() {
     const cart = getApp().globalData.cart || [];
     const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
-    const cartTotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
     this.setData({
       cart,
       cartCount,
-      cartTotal,
       filteredDishes: this.decorateDishes(
         dishes.filter((dish) => dish.category === this.data.activeCategory),
         cart

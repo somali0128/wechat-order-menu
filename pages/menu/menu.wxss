@@ -1,7 +1,7 @@
 .menu-page {
   display: flex;
   flex-direction: column;
-  gap: 24rpx;
+  gap: 20rpx;
 }
 
 .hero {
@@ -10,7 +10,7 @@
   justify-content: space-between;
   gap: 24rpx;
   min-height: 188rpx;
-  padding: 28rpx;
+  padding: 26rpx;
   border-radius: 20rpx;
   color: #ffffff;
   background: linear-gradient(135deg, #ffad2f 0%, #ff8a1f 52%, #1e88e5 100%);
@@ -29,7 +29,7 @@
 }
 
 .hero-subtitle {
-  max-width: 460rpx;
+  max-width: 430rpx;
   margin-top: 12rpx;
   font-size: 24rpx;
   line-height: 1.5;
@@ -41,10 +41,11 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  flex: 0 0 118rpx;
-  height: 118rpx;
+  flex: 0 0 104rpx;
+  width: 104rpx;
+  height: 104rpx;
   border: 2rpx solid rgba(255, 255, 255, 0.38);
-  border-radius: 59rpx;
+  border-radius: 52rpx;
   background: rgba(255, 255, 255, 0.18);
 }
 
@@ -55,7 +56,7 @@
 
 .content {
   display: flex;
-  min-height: 780rpx;
+  min-height: 820rpx;
   overflow: hidden;
   border-radius: 20rpx;
   background: #ffffff;
@@ -63,18 +64,19 @@
 }
 
 .category-list {
-  width: 176rpx;
-  max-height: 900rpx;
+  flex: 0 0 132rpx;
+  width: 132rpx;
+  max-height: 920rpx;
   background: #f3f8ff;
 }
 
 .category-item {
   width: 100%;
-  min-height: 104rpx;
-  padding: 0 18rpx;
+  min-height: 96rpx;
+  padding: 0 8rpx;
   color: #607180;
   background: transparent;
-  font-size: 27rpx;
+  font-size: 25rpx;
   font-weight: 700;
   text-align: center;
 }
@@ -87,13 +89,16 @@
 
 .dish-list {
   flex: 1;
-  max-height: 900rpx;
-  padding: 20rpx;
+  min-width: 0;
+  max-height: 920rpx;
+  padding: 18rpx;
 }
 
 .dish-card {
   display: flex;
-  gap: 18rpx;
+  align-items: flex-start;
+  gap: 16rpx;
+  min-width: 0;
   padding: 18rpx 0;
   border-bottom: 2rpx solid #eef2f6;
 }
@@ -106,11 +111,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  flex: 0 0 142rpx;
-  height: 142rpx;
-  border-radius: 18rpx;
+  flex: 0 0 112rpx;
+  width: 112rpx;
+  height: 112rpx;
+  border-radius: 16rpx;
   color: #ffffff;
-  font-size: 54rpx;
+  font-size: 44rpx;
   font-weight: 800;
 }
 
@@ -136,6 +142,9 @@
   font-size: 31rpx;
   font-weight: 800;
   line-height: 1.25;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .dish-desc {
@@ -143,6 +152,10 @@
   color: #7b8794;
   font-size: 24rpx;
   line-height: 1.45;
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
 }
 
 .dish-meta {
@@ -178,21 +191,15 @@
 .dish-bottom {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 16rpx;
-  margin-top: 18rpx;
-}
-
-.price {
-  color: #ff8a1f;
-  font-size: 31rpx;
-  font-weight: 800;
+  justify-content: flex-end;
+  margin-top: 16rpx;
 }
 
 .stepper {
   display: flex;
   align-items: center;
   gap: 12rpx;
+  flex: 0 0 auto;
 }
 
 .step-btn,
@@ -200,6 +207,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  margin: 0;
   width: 52rpx;
   height: 52rpx;
   border-radius: 26rpx;

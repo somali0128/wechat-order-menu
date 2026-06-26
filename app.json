@@ -5,7 +5,7 @@
     "pages/orders/orders"
   ],
   "window": {
-    "navigationBarTitleText": "今天吃什么",
+    "navigationBarTitleText": "樾哥厨房",
     "navigationBarBackgroundColor": "#ffb12f",
     "navigationBarTextStyle": "black",
     "backgroundColor": "#fff8ec",

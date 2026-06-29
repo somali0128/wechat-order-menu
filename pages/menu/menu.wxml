@@ -36,7 +36,8 @@
               <view class="dish-desc">{{item.description}}</view>
               <view class="dish-meta">
                 <text>{{item.tag}}</text>
-                <text>{{item.time}}</text>
+                <text>{{item.calories}}</text>
+                <text>{{item.protein}}</text>
               </view>
             </view>
             <view class="ingredients">

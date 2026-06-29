@@ -31,7 +31,7 @@
 
         <view class="dish-line">
           <block wx:for="{{item.dishes}}" wx:key="id" wx:for-item="dish">
-            <text>{{dish.name}} x{{dish.quantity}}</text>
+            <text>{{dish.name}}</text>
           </block>
         </view>
 

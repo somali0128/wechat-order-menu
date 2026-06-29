@@ -33,15 +33,15 @@ Page({
     this.setData({ filteredDishes });
   },
 
-  addDish(event) {
+  toggleDish(event) {
     const id = event.currentTarget.dataset.id;
     const dish = dishes.find((item) => item.id === id);
     const app = getApp();
-    const cart = [...app.globalData.cart];
+    let cart = [...app.globalData.cart];
     const existing = cart.find((item) => item.id === id);
 
     if (existing) {
-      existing.quantity += 1;
+      cart = cart.filter((item) => item.id !== id);
     } else {
       cart.push({
         ...dish,
@@ -52,25 +52,14 @@ Page({
     app.setCart(cart);
     this.refreshCart();
     wx.showToast({
-      title: "已加入菜单",
+      title: existing ? "已取消" : "已加入菜单",
       icon: "success"
     });
   },
 
-  reduceDish(event) {
-    const id = event.currentTarget.dataset.id;
-    const app = getApp();
-    const cart = app.globalData.cart
-      .map((item) => (item.id === id ? { ...item, quantity: item.quantity - 1 } : item))
-      .filter((item) => item.quantity > 0);
-
-    app.setCart(cart);
-    this.refreshCart();
-  },
-
   refreshCart() {
     const cart = getApp().globalData.cart || [];
-    const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+    const cartCount = cart.length;
 
     this.setData({
       cart,
@@ -88,7 +77,8 @@ Page({
       return {
         ...dish,
         initial: dish.name.charAt(0),
-        quantity: cartItem ? cartItem.quantity : 0
+        selected: Boolean(cartItem),
+        actionText: cartItem ? "再想想" : "吃这个！"
       };
     });
   },

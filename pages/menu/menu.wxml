@@ -45,25 +45,13 @@
               </block>
             </view>
             <view class="dish-bottom">
-              <view class="stepper">
-                <button
-                  wx:if="{{item.quantity > 0}}"
-                  class="step-btn"
-                  data-id="{{item.id}}"
-                  bindtap="reduceDish"
-                >
-                  <text class="step-symbol">-</text>
-                </button>
-                <text
-                  wx:if="{{item.quantity > 0}}"
-                  class="quantity"
-                >
-                  {{item.quantity}}
-                </text>
-                <button class="add-btn" data-id="{{item.id}}" bindtap="addDish">
-                  <text class="step-symbol">+</text>
-                </button>
-              </view>
+              <button
+                class="choose-btn {{item.selected ? 'selected' : ''}}"
+                data-id="{{item.id}}"
+                bindtap="toggleDish"
+              >
+                {{item.actionText}}
+              </button>
             </view>
           </view>
         </view>

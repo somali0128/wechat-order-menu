@@ -15,7 +15,6 @@
           <view class="selected-desc">{{item.ingredientText}}</view>
         </view>
         <view class="selected-side">
-          <text>x{{item.quantity}}</text>
           <button data-id="{{item.id}}" bindtap="removeDish">移除</button>
         </view>
       </view>

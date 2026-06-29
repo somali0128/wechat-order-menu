@@ -52,7 +52,7 @@ function buildOrder(cart, checkedIngredients) {
       name,
       ready: checkedIngredients.includes(name)
     })),
-    totalItems: cart.reduce((sum, item) => sum + item.quantity, 0),
+    totalItems: cart.length,
     createdAt: Date.now(),
     createdAtText: formatTime(Date.now())
   };

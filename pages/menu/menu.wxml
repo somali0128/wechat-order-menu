@@ -52,7 +52,7 @@
                   data-id="{{item.id}}"
                   bindtap="reduceDish"
                 >
-                  -
+                  <text class="step-symbol">-</text>
                 </button>
                 <text
                   wx:if="{{item.quantity > 0}}"
@@ -60,7 +60,9 @@
                 >
                   {{item.quantity}}
                 </text>
-                <button class="add-btn" data-id="{{item.id}}" bindtap="addDish">+</button>
+                <button class="add-btn" data-id="{{item.id}}" bindtap="addDish">
+                  <text class="step-symbol">+</text>
+                </button>
               </view>
             </view>
           </view>

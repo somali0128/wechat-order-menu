@@ -27,9 +27,7 @@ Page({
   },
 
   filterDishes() {
-    const filteredDishes = this.decorateDishes(
-      dishes.filter((dish) => dish.category === this.data.activeCategory)
-    );
+    const filteredDishes = this.decorateDishes(this.getDishesByCategory());
     this.setData({ filteredDishes });
   },
 
@@ -64,11 +62,15 @@ Page({
     this.setData({
       cart,
       cartCount,
-      filteredDishes: this.decorateDishes(
-        dishes.filter((dish) => dish.category === this.data.activeCategory),
-        cart
-      )
+      filteredDishes: this.decorateDishes(this.getDishesByCategory(), cart)
     });
+  },
+
+  getDishesByCategory() {
+    if (this.data.activeCategory === "全部") {
+      return dishes;
+    }
+    return dishes.filter((dish) => dish.category === this.data.activeCategory);
   },
 
   decorateDishes(list, currentCart = this.data.cart) {

@@ -71,7 +71,7 @@ const dishes = [
   }
 ];
 
-const categories = ["宝宝推荐", "中餐", "西餐"];
+const categories = ["全部", "宝宝推荐", "中餐", "西餐"];
 
 module.exports = {
   dishes,

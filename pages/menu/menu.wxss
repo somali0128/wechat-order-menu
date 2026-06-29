@@ -64,27 +64,38 @@
 }
 
 .category-list {
-  flex: 0 0 132rpx;
-  width: 132rpx;
+  flex: 0 0 150rpx;
+  width: 150rpx;
   max-height: 920rpx;
   background: #f3f8ff;
 }
 
 .category-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
-  min-height: 96rpx;
-  padding: 0 8rpx;
+  min-height: 104rpx;
+  padding: 0 14rpx;
   color: #607180;
   background: transparent;
-  font-size: 25rpx;
+  font-size: 26rpx;
   font-weight: 700;
   text-align: center;
+  line-height: 1.25;
 }
 
 .category-item.active {
   color: #1e88e5;
   background: #ffffff;
   box-shadow: inset 8rpx 0 0 #ffad2f;
+}
+
+.category-label {
+  display: block;
+  max-width: 100%;
+  overflow-wrap: break-word;
+  word-break: break-all;
 }
 
 .dish-list {
@@ -111,9 +122,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  flex: 0 0 112rpx;
-  width: 112rpx;
-  height: 112rpx;
+  flex: 0 0 104rpx;
+  width: 104rpx;
+  height: 104rpx;
   border-radius: 16rpx;
   color: #ffffff;
   font-size: 44rpx;

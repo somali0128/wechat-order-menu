@@ -14,13 +14,13 @@
   <view class="content">
     <scroll-view class="category-list" scroll-y enhanced show-scrollbar="{{false}}">
       <block wx:for="{{categories}}" wx:key="*this">
-        <button
+        <view
           class="category-item {{activeCategory === item ? 'active' : ''}}"
           data-category="{{item}}"
           bindtap="selectCategory"
         >
-          {{item}}
-        </button>
+          <text class="category-label">{{item}}</text>
+        </view>
       </block>
     </scroll-view>
 

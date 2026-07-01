@@ -169,11 +169,5 @@ Page({
     wx.switchTab({
       url: "/pages/cart/cart"
     });
-  },
-
-  goManage() {
-    wx.navigateTo({
-      url: "/pages/manage/manage"
-    });
   }
 });

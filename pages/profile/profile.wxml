@@ -22,6 +22,14 @@
     </view>
   </view>
 
+  <view class="card menu-card">
+    <view>
+      <view class="section-title">共享菜单</view>
+      <view class="section-subtitle">添加、修改或移除菜品后，成员会同步看到。</view>
+    </view>
+    <button class="secondary-btn manage-btn" bindtap="goManage">管理菜品</button>
+  </view>
+
   <view class="card">
     <view class="panel-head">
       <view>

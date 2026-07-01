@@ -48,7 +48,8 @@
 .user-row,
 .member-row,
 .panel-head,
-.auth-actions {
+.auth-actions,
+.menu-card {
   display: flex;
   align-items: center;
 }
@@ -109,6 +110,15 @@
 
 .auth-actions {
   gap: 16rpx;
+}
+
+.menu-card {
+  justify-content: space-between;
+  gap: 20rpx;
+}
+
+.manage-btn {
+  flex: 0 0 188rpx;
 }
 
 .auth-btn {

@@ -241,5 +241,11 @@ Page({
         }
       }
     });
+  },
+
+  goManage() {
+    wx.navigateTo({
+      url: "/pages/manage/manage"
+    });
   }
 });

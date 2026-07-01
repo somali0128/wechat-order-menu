@@ -1,7 +1,14 @@
+.menu-page,
+page {
+  height: 100vh;
+  overflow: hidden;
+}
+
 .menu-page {
   display: flex;
   flex-direction: column;
   gap: 20rpx;
+  min-height: 0;
 }
 
 .hero {
@@ -56,26 +63,18 @@
 
 .content {
   display: flex;
-  min-height: 820rpx;
+  flex: 1;
+  min-height: 0;
   overflow: hidden;
   border-radius: 20rpx;
   background: #ffffff;
   box-shadow: 0 16rpx 40rpx rgba(38, 50, 56, 0.08);
 }
 
-.menu-tools {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.manage-btn {
-  flex: 0 0 188rpx;
-}
-
 .category-list {
   flex: 0 0 150rpx;
   width: 150rpx;
-  max-height: 920rpx;
+  height: 100%;
   background: #f3f8ff;
 }
 
@@ -110,7 +109,7 @@
 .dish-list {
   flex: 1;
   min-width: 0;
-  max-height: 920rpx;
+  height: 100%;
   padding: 18rpx;
 }
 

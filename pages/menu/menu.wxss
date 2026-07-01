@@ -63,6 +63,15 @@
   box-shadow: 0 16rpx 40rpx rgba(38, 50, 56, 0.08);
 }
 
+.menu-tools {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.manage-btn {
+  flex: 0 0 188rpx;
+}
+
 .category-list {
   flex: 0 0 150rpx;
   width: 150rpx;
@@ -103,6 +112,13 @@
   min-width: 0;
   max-height: 920rpx;
   padding: 18rpx;
+}
+
+.menu-empty {
+  padding: 80rpx 24rpx;
+  color: #7b8794;
+  line-height: 1.5;
+  text-align: center;
 }
 
 .dish-card {

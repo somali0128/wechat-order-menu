@@ -1,0 +1,66 @@
+<view class="page profile-page">
+  <view class="profile-hero">
+    <view>
+      <view class="hero-title">个人信息</view>
+      <view class="hero-subtitle">{{cloudReady ? '共享菜单成员会实时同步。' : '当前为本地演示模式，配置云开发后可同步。'}}</view>
+    </view>
+    <view class="sync-pill">{{cloudReady ? '云同步' : '本地'}}</view>
+  </view>
+
+  <view class="card auth-card">
+    <view class="user-row">
+      <image wx:if="{{userProfile && userProfile.avatarUrl}}" class="avatar" src="{{userProfile.avatarUrl}}" mode="aspectFill" />
+      <view wx:else class="avatar placeholder">我</view>
+      <view class="user-info">
+        <view class="user-name">{{userProfile ? userProfile.nickName : '未授权微信资料'}}</view>
+        <view class="user-desc">{{loginCode ? '微信登录已完成' : '可先登录，再授权微信资料'}}</view>
+      </view>
+    </view>
+    <view class="auth-actions">
+      <button class="secondary-btn auth-btn" bindtap="loginWithWechat">微信登录</button>
+      <button class="primary-btn auth-btn" bindtap="authorizeProfile">微信授权</button>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="panel-head">
+      <view>
+        <view class="section-title">{{editing ? '编辑成员' : '添加成员'}}</view>
+        <view class="section-subtitle">用于共享菜单和采购信息</view>
+      </view>
+      <button wx:if="{{editing}}" class="text-btn" bindtap="resetForm">取消</button>
+    </view>
+
+    <view class="field-grid">
+      <input class="field" placeholder="姓名" value="{{form.name}}" data-field="name" bindinput="updateField" />
+      <input class="field" placeholder="角色，如 A用户 / B用户" value="{{form.role}}" data-field="role" bindinput="updateField" />
+      <input class="field full" placeholder="联系方式，可选" value="{{form.phone}}" data-field="phone" bindinput="updateField" />
+    </view>
+
+    <button class="primary-btn save-btn" loading="{{saving}}" bindtap="saveMember">
+      {{editing ? '保存成员' : '添加成员'}}
+    </button>
+  </view>
+
+  <view class="card">
+    <view class="section-title">共享成员</view>
+    <view wx:if="{{loading}}" class="empty">正在同步...</view>
+    <view wx:elif="{{!members.length}}" class="empty">还没有成员，添加后可一起维护共享菜单。</view>
+    <block wx:else>
+      <block wx:for="{{members}}" wx:key="id">
+        <view class="member-row">
+          <image wx:if="{{item.avatarUrl}}" class="member-avatar" src="{{item.avatarUrl}}" mode="aspectFill" />
+          <view wx:else class="member-avatar text-avatar">{{item.initial}}</view>
+          <view class="member-info">
+            <view class="member-name">{{item.name}}</view>
+            <view class="member-meta">{{item.metaText}}</view>
+          </view>
+          <view class="member-actions">
+            <button class="small-btn" data-id="{{item.id}}" bindtap="editMember">编辑</button>
+            <button class="small-btn danger" data-id="{{item.id}}" bindtap="confirmRemove">移除</button>
+          </view>
+        </view>
+      </block>
+    </block>
+  </view>
+</view>

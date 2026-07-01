@@ -9,7 +9,8 @@ page {
 view,
 text,
 button,
-input {
+input,
+textarea {
   box-sizing: border-box;
 }
 

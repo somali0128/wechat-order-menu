@@ -3,7 +3,7 @@
     <view>
       <view class="hero-kicker">樾哥厨房</view>
       <view class="hero-title">今天想吃什么？</view>
-      <view class="hero-subtitle">先选菜，再核对食材，家人手机可同步收到订单。</view>
+      <view class="hero-subtitle">{{heroSubtitle}}</view>
     </view>
     <view class="hero-badge">
       <text class="hero-badge-number">{{cartCount}}</text>

@@ -1,6 +1,13 @@
 const { dishes: defaultDishes } = require("../../data/dishes");
 const { getCategories, listDishes, watchDishes } = require("../../utils/menuStore");
 
+const heroSubtitles = [
+  "今天锻炼了吗？记得补充蛋白质",
+  "偶尔尝尝好久没吃过的菜也不错",
+  "有想吃的新菜？记得添加到菜单哦",
+  "实在不知道吃啥咱下个馆子吧"
+];
+
 Page({
   data: {
     categories: getCategories(defaultDishes),
@@ -9,12 +16,14 @@ Page({
     filteredDishes: [],
     cart: [],
     cartCount: 0,
-    loading: true
+    loading: true,
+    heroSubtitle: heroSubtitles[0]
   },
 
   watcher: null,
 
   onLoad() {
+    this.pickHeroSubtitle();
     this.refreshCart();
   },
 
@@ -30,6 +39,13 @@ Page({
 
   onUnload() {
     this.closeWatch();
+  },
+
+  pickHeroSubtitle() {
+    const index = Math.floor(Math.random() * heroSubtitles.length);
+    this.setData({
+      heroSubtitle: heroSubtitles[index]
+    });
   },
 
   async loadDishes() {

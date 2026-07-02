@@ -49,7 +49,7 @@
     "disableSWC": true
   },
   "compileType": "miniprogram",
-  "libVersion": "latest",
+  "libVersion": "3.15.2",
   "appid": "wx73b45137288cc5a6",
   "projectname": "family-menu-ordering",
   "condition": {},

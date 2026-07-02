@@ -1,8 +1,10 @@
 {
   "pages": [
     "pages/menu/menu",
+    "pages/manage/manage",
     "pages/cart/cart",
-    "pages/orders/orders"
+    "pages/orders/orders",
+    "pages/profile/profile"
   ],
   "window": {
     "navigationBarTitleText": "樾哥厨房",
@@ -28,6 +30,10 @@
       {
         "pagePath": "pages/orders/orders",
         "text": "订单"
+      },
+      {
+        "pagePath": "pages/profile/profile",
+        "text": "我的"
       }
     ]
   },

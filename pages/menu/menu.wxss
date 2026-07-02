@@ -1,7 +1,14 @@
+.menu-page,
+page {
+  height: 100vh;
+  overflow: hidden;
+}
+
 .menu-page {
   display: flex;
   flex-direction: column;
   gap: 20rpx;
+  min-height: 0;
 }
 
 .hero {
@@ -56,7 +63,8 @@
 
 .content {
   display: flex;
-  min-height: 820rpx;
+  flex: 1;
+  min-height: 0;
   overflow: hidden;
   border-radius: 20rpx;
   background: #ffffff;
@@ -66,7 +74,7 @@
 .category-list {
   flex: 0 0 150rpx;
   width: 150rpx;
-  max-height: 920rpx;
+  height: 100%;
   background: #f3f8ff;
 }
 
@@ -101,8 +109,15 @@
 .dish-list {
   flex: 1;
   min-width: 0;
-  max-height: 920rpx;
+  height: 100%;
   padding: 18rpx;
+}
+
+.menu-empty {
+  padding: 80rpx 24rpx;
+  color: #7b8794;
+  line-height: 1.5;
+  text-align: center;
 }
 
 .dish-card {

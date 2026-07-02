@@ -3,7 +3,7 @@
     <view>
       <view class="hero-kicker">樾哥厨房</view>
       <view class="hero-title">今天想吃什么？</view>
-      <view class="hero-subtitle">先选菜，再核对食材，家人手机可同步收到订单。</view>
+      <view class="hero-subtitle">{{heroSubtitle}}</view>
     </view>
     <view class="hero-badge">
       <text class="hero-badge-number">{{cartCount}}</text>
@@ -25,37 +25,41 @@
     </scroll-view>
 
     <scroll-view class="dish-list" scroll-y enhanced show-scrollbar="{{false}}">
-      <block wx:for="{{filteredDishes}}" wx:key="id">
-        <view class="dish-card">
-          <view class="dish-cover tone-{{item.imageTone}}">
-            <text>{{item.initial}}</text>
-          </view>
-          <view class="dish-info">
-            <view class="dish-main">
-              <view class="dish-name">{{item.name}}</view>
-              <view class="dish-desc">{{item.description}}</view>
-              <view class="dish-meta">
-                <text>{{item.tag}}</text>
-                <text>{{item.calories}}</text>
-                <text>{{item.protein}}</text>
+      <view wx:if="{{loading}}" class="menu-empty">正在同步共享菜单...</view>
+      <view wx:elif="{{!filteredDishes.length}}" class="menu-empty">暂无菜品，可在“我的”页添加。</view>
+      <block wx:else>
+        <block wx:for="{{filteredDishes}}" wx:key="id">
+          <view class="dish-card">
+            <view class="dish-cover tone-{{item.imageTone}}">
+              <text>{{item.initial}}</text>
+            </view>
+            <view class="dish-info">
+              <view class="dish-main">
+                <view class="dish-name">{{item.name}}</view>
+                <view class="dish-desc">{{item.description}}</view>
+                <view class="dish-meta">
+                  <text>{{item.tag}}</text>
+                  <text>{{item.calories}}</text>
+                  <text>{{item.protein}}</text>
+                </view>
+              </view>
+              <view class="ingredients">
+                <block wx:for="{{item.ingredients}}" wx:key="*this" wx:for-item="ingredient">
+                  <text>{{ingredient}}</text>
+                </block>
+              </view>
+              <view class="dish-bottom">
+                <button
+                  class="choose-btn {{item.selected ? 'selected' : ''}}"
+                  data-id="{{item.id}}"
+                  bindtap="toggleDish"
+                >
+                  {{item.actionText}}
+                </button>
               </view>
             </view>
-            <view class="ingredients">
-              <block wx:for="{{item.ingredients}}" wx:key="*this" wx:for-item="ingredient">
-                <text>{{ingredient}}</text>
-              </block>
-            </view>
-            <view class="dish-bottom">
-              <button
-                class="choose-btn {{item.selected ? 'selected' : ''}}"
-                data-id="{{item.id}}"
-                bindtap="toggleDish"
-              >
-                {{item.actionText}}
-              </button>
-            </view>
           </view>
-        </view>
+        </block>
       </block>
     </scroll-view>
   </view>

@@ -77,12 +77,17 @@
 }
 
 .selected-side button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   min-width: 92rpx;
   height: 48rpx;
   border-radius: 24rpx;
   color: #7b8794;
   background: #f3f6f9;
   font-size: 23rpx;
+  line-height: 48rpx;
+  text-align: center;
 }
 
 .empty {

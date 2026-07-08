@@ -13,12 +13,32 @@
       <view wx:else class="avatar placeholder">我</view>
       <view class="user-info">
         <view class="user-name">{{userProfile ? userProfile.nickName : '未授权微信资料'}}</view>
-        <view class="user-desc">{{loginCode ? '微信登录已完成' : '可先登录，再授权微信资料'}}</view>
+        <view class="user-desc">{{session && session.openid ? 'OpenID：' + session.openid : '可先登录，再授权微信资料'}}</view>
       </view>
     </view>
     <view class="auth-actions">
       <button class="secondary-btn auth-btn" bindtap="loginWithWechat">微信登录</button>
       <button class="primary-btn auth-btn" bindtap="authorizeProfile">微信授权</button>
+    </view>
+  </view>
+
+  <view class="card family-card">
+    <view class="panel-head">
+      <view>
+        <view class="section-title">家庭共享</view>
+        <view class="section-subtitle">当前家庭码：{{familyKey}}</view>
+      </view>
+      <button class="text-btn" bindtap="copyFamilyCode">复制</button>
+    </view>
+
+    <view class="family-actions">
+      <input class="field family-field" placeholder="输入家庭码加入" value="{{familyCode}}" bindinput="updateFamilyCode" />
+      <button class="secondary-btn family-btn" bindtap="switchFamily">加入/切换</button>
+    </view>
+
+    <view class="auth-actions">
+      <button class="secondary-btn auth-btn" bindtap="createNewFamily">新建家庭</button>
+      <button class="primary-btn auth-btn" open-type="share">微信分享邀请</button>
     </view>
   </view>
 

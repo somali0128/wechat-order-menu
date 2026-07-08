@@ -112,6 +112,27 @@
   gap: 16rpx;
 }
 
+.family-card {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.family-actions {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+}
+
+.family-field {
+  flex: 1;
+  min-width: 0;
+}
+
+.family-btn {
+  flex: 0 0 180rpx;
+}
+
 .menu-card {
   justify-content: space-between;
   gap: 20rpx;

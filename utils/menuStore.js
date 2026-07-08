@@ -1,8 +1,8 @@
 const { dishes: defaultDishes } = require("../data/dishes");
-const { DEFAULT_FAMILY_KEY, MENU_COLLECTION } = require("./config");
+const { MENU_COLLECTION } = require("./config");
+const { getFamilyKey } = require("./sessionStore");
 
 const LOCAL_MENU_KEY = "family_menu_dishes";
-const MENU_DOC_ID = DEFAULT_FAMILY_KEY || "default_family";
 
 function getAppInstance() {
   return getApp ? getApp() : null;
@@ -41,7 +41,7 @@ function normalizeDish(dish) {
 }
 
 function getLocalDishes() {
-  const cached = wx.getStorageSync(LOCAL_MENU_KEY);
+  const cached = wx.getStorageSync(`${LOCAL_MENU_KEY}_${getFamilyKey()}`);
   if (Array.isArray(cached) && cached.length) {
     return cached.map(normalizeDish);
   }
@@ -49,7 +49,7 @@ function getLocalDishes() {
 }
 
 function setLocalDishes(dishes) {
-  wx.setStorageSync(LOCAL_MENU_KEY, dishes.map(normalizeDish));
+  wx.setStorageSync(`${LOCAL_MENU_KEY}_${getFamilyKey()}`, dishes.map(normalizeDish));
 }
 
 function getCategories(dishes) {
@@ -63,17 +63,18 @@ function getCategories(dishes) {
 }
 
 async function ensureCloudMenu(db) {
+  const familyKey = getFamilyKey();
   try {
-    const result = await db.collection(MENU_COLLECTION).doc(MENU_DOC_ID).get();
+    const result = await db.collection(MENU_COLLECTION).doc(familyKey).get();
     if (result.data && Array.isArray(result.data.dishes)) {
       const dishes = result.data.dishes.map(normalizeDish);
       setLocalDishes(dishes);
       return dishes;
     }
   } catch (error) {
-    await db.collection(MENU_COLLECTION).doc(MENU_DOC_ID).set({
+    await db.collection(MENU_COLLECTION).doc(familyKey).set({
       data: {
-        familyKey: MENU_DOC_ID,
+        familyKey,
         dishes: getLocalDishes(),
         updatedAt: Date.now()
       }
@@ -96,9 +97,10 @@ async function saveDishes(dishes) {
 
   if (isCloudReady()) {
     const db = wx.cloud.database();
-    await db.collection(MENU_COLLECTION).doc(MENU_DOC_ID).set({
+    const familyKey = getFamilyKey();
+    await db.collection(MENU_COLLECTION).doc(familyKey).set({
       data: {
-        familyKey: MENU_DOC_ID,
+        familyKey,
         dishes: normalized,
         updatedAt: Date.now()
       }
@@ -137,7 +139,7 @@ function watchDishes(onChange, onError) {
   }
 
   const db = wx.cloud.database();
-  return db.collection(MENU_COLLECTION).doc(MENU_DOC_ID).watch({
+  return db.collection(MENU_COLLECTION).doc(getFamilyKey()).watch({
     onChange(snapshot) {
       const doc = snapshot.docs && snapshot.docs[0];
       if (doc && Array.isArray(doc.dishes)) {

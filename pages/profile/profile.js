@@ -1,4 +1,13 @@
 const { listMembers, removeMember, upsertMember, watchMembers } = require("../../utils/memberStore");
+const {
+  buildSharePath,
+  createFamilyKey,
+  getFamilyKey,
+  getStoredSession,
+  login,
+  normalizeFamilyKey,
+  setFamilyKey
+} = require("../../utils/sessionStore");
 
 const emptyForm = {
   id: "",
@@ -10,8 +19,10 @@ const emptyForm = {
 Page({
   data: {
     cloudReady: false,
+    familyKey: "",
+    familyCode: "",
+    session: null,
     userProfile: null,
-    loginCode: "",
     members: [],
     form: { ...emptyForm },
     editing: false,
@@ -21,12 +32,27 @@ Page({
 
   watcher: null,
 
-  onLoad() {
+  onLoad(options = {}) {
+    if (options.familyKey) {
+      setFamilyKey(options.familyKey);
+    }
+
     const app = getApp();
     this.setData({
       cloudReady: app.globalData.cloudReady,
+      familyKey: getFamilyKey(),
+      familyCode: getFamilyKey(),
+      session: getStoredSession(),
       userProfile: app.globalData.userProfile
     });
+
+    if (wx.showShareMenu) {
+      wx.showShareMenu({
+        withShareTicket: true,
+        menus: ["shareAppMessage", "shareTimeline"]
+      });
+    }
+
     this.loadMembers();
     this.startWatch();
   },
@@ -35,24 +61,36 @@ Page({
     this.closeWatch();
   },
 
+  onShow() {
+    const familyKey = getFamilyKey();
+    if (familyKey !== this.data.familyKey) {
+      this.setData({
+        familyKey,
+        familyCode: familyKey,
+        session: getStoredSession(),
+        members: [],
+        loading: true
+      });
+      this.loadMembers();
+      this.startWatch();
+    }
+  },
+
   async loginWithWechat() {
     try {
-      const result = await new Promise((resolve, reject) => {
-        wx.login({
-          success: resolve,
-          fail: reject
-        });
-      });
+      const result = await login();
       this.setData({
-        loginCode: result.code || ""
+        session: result,
+        familyKey: getFamilyKey(),
+        familyCode: getFamilyKey()
       });
       wx.showToast({
-        title: "登录成功",
+        title: result.cloud ? "云登录成功" : "本地登录成功",
         icon: "success"
       });
     } catch (error) {
       wx.showToast({
-        title: "登录失败",
+        title: "登录失败，请检查云函数",
         icon: "none"
       });
     }
@@ -139,6 +177,57 @@ Page({
     });
   },
 
+  updateFamilyCode(event) {
+    this.setData({
+      familyCode: normalizeFamilyKey(event.detail.value)
+    });
+  },
+
+  switchFamily() {
+    const familyKey = setFamilyKey(this.data.familyCode);
+    this.setData({
+      familyKey,
+      familyCode: familyKey,
+      members: [],
+      loading: true
+    });
+    this.loadMembers();
+    this.startWatch();
+    wx.showToast({
+      title: "已切换家庭",
+      icon: "success"
+    });
+  },
+
+  createNewFamily() {
+    const session = this.data.session || getStoredSession() || {};
+    const familyKey = setFamilyKey(createFamilyKey(session.openid));
+    this.setData({
+      familyKey,
+      familyCode: familyKey,
+      members: [],
+      loading: true
+    });
+    this.loadMembers();
+    this.startWatch();
+    wx.showToast({
+      title: "已创建家庭",
+      icon: "success"
+    });
+  },
+
+  copyFamilyCode() {
+    wx.setClipboardData({
+      data: this.data.familyKey,
+      success: () => {
+        wx.showToast({
+          title: "家庭码已复制",
+          icon: "success"
+        });
+      }
+    });
+  },
+
   decorateMembers(members) {
     return members.map((member) => ({
       ...member,
@@ -185,13 +274,14 @@ Page({
     this.setData({ saving: true });
     try {
       const profile = this.data.userProfile || {};
+      const session = this.data.session || getStoredSession() || {};
       await upsertMember({
         id: form.id,
         name: form.name.trim(),
         role: form.role.trim() || "成员",
         phone: form.phone.trim(),
         avatarUrl: profile.avatarUrl || "",
-        openid: this.data.loginCode ? `login_${this.data.loginCode.slice(0, 8)}` : ""
+        openid: session.openid || ""
       });
       this.resetForm();
       wx.showToast({
@@ -247,5 +337,19 @@ Page({
     wx.navigateTo({
       url: "/pages/manage/manage"
     });
+  },
+
+  onShareAppMessage() {
+    return {
+      title: "邀请你加入樾哥厨房共享菜单",
+      path: buildSharePath("/pages/profile/profile")
+    };
+  },
+
+  onShareTimeline() {
+    return {
+      title: "樾哥厨房共享菜单",
+      query: `familyKey=${encodeURIComponent(this.data.familyKey)}`
+    };
   }
 });

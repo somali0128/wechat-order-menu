@@ -1,4 +1,5 @@
 const { ORDERS_COLLECTION } = require("./config");
+const { getFamilyKey, getStoredSession } = require("./sessionStore");
 
 function getAppInstance() {
   return getApp ? getApp() : null;
@@ -10,11 +11,11 @@ function isCloudReady() {
 }
 
 function getLocalOrders() {
-  return wx.getStorageSync("family_menu_orders") || [];
+  return wx.getStorageSync(`family_menu_orders_${getFamilyKey()}`) || [];
 }
 
 function setLocalOrders(orders) {
-  wx.setStorageSync("family_menu_orders", orders);
+  wx.setStorageSync(`family_menu_orders_${getFamilyKey()}`, orders);
 }
 
 function normalizeOrder(order) {
@@ -41,6 +42,8 @@ function buildOrder(cart, checkedIngredients) {
   });
 
   return {
+    familyKey: getFamilyKey(),
+    createdBy: (getStoredSession() || {}).openid || "",
     status: "已下单",
     dishes: cart.map((item) => ({
       id: item.id,
@@ -62,7 +65,11 @@ async function createOrder(order) {
   if (isCloudReady()) {
     const db = wx.cloud.database();
     const result = await db.collection(ORDERS_COLLECTION).add({
-      data: order
+      data: {
+        ...order,
+        familyKey: getFamilyKey(),
+        createdBy: order.createdBy || (getStoredSession() || {}).openid || ""
+      }
     });
     return {
       ...order,
@@ -84,6 +91,7 @@ async function listOrders() {
     const db = wx.cloud.database();
     const result = await db
       .collection(ORDERS_COLLECTION)
+      .where({ familyKey: getFamilyKey() })
       .orderBy("createdAt", "desc")
       .limit(20)
       .get();
@@ -102,6 +110,7 @@ function watchOrders(onChange, onError) {
   const db = wx.cloud.database();
   return db
     .collection(ORDERS_COLLECTION)
+    .where({ familyKey: getFamilyKey() })
     .orderBy("createdAt", "desc")
     .watch({
       onChange(snapshot) {

@@ -1,5 +1,6 @@
 const { dishes: defaultDishes } = require("../../data/dishes");
 const { getCategories, listDishes, watchDishes } = require("../../utils/menuStore");
+const { buildSharePath } = require("../../utils/sessionStore");
 
 const heroSubtitles = [
   "今天锻炼了吗？记得补充蛋白质",
@@ -185,5 +186,19 @@ Page({
     wx.switchTab({
       url: "/pages/cart/cart"
     });
+  },
+
+  onShareAppMessage() {
+    return {
+      title: "邀请你加入樾哥厨房共享菜单",
+      path: buildSharePath("/pages/profile/profile")
+    };
+  },
+
+  onShareTimeline() {
+    return {
+      title: "樾哥厨房共享菜单",
+      query: buildSharePath("").replace(/^\?/, "")
+    };
   }
 });

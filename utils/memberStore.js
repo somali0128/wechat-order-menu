@@ -1,7 +1,7 @@
-const { DEFAULT_FAMILY_KEY, MEMBERS_COLLECTION } = require("./config");
+const { MEMBERS_COLLECTION } = require("./config");
+const { getFamilyKey } = require("./sessionStore");
 
 const LOCAL_MEMBERS_KEY = "family_menu_members";
-const FAMILY_KEY = DEFAULT_FAMILY_KEY || "default_family";
 
 function getAppInstance() {
   return getApp ? getApp() : null;
@@ -13,6 +13,7 @@ function isCloudReady() {
 }
 
 function normalizeMember(member) {
+  const familyKey = getFamilyKey();
   return {
     id: member.id || member._id || `member_${Date.now()}`,
     name: member.name || "家庭成员",
@@ -20,18 +21,18 @@ function normalizeMember(member) {
     phone: member.phone || "",
     avatarUrl: member.avatarUrl || "",
     openid: member.openid || "",
-    familyKey: member.familyKey || FAMILY_KEY,
+    familyKey: member.familyKey || familyKey,
     updatedAt: member.updatedAt || Date.now()
   };
 }
 
 function getLocalMembers() {
-  const cached = wx.getStorageSync(LOCAL_MEMBERS_KEY);
+  const cached = wx.getStorageSync(`${LOCAL_MEMBERS_KEY}_${getFamilyKey()}`);
   return Array.isArray(cached) ? cached.map(normalizeMember) : [];
 }
 
 function setLocalMembers(members) {
-  wx.setStorageSync(LOCAL_MEMBERS_KEY, members.map(normalizeMember));
+  wx.setStorageSync(`${LOCAL_MEMBERS_KEY}_${getFamilyKey()}`, members.map(normalizeMember));
 }
 
 async function listMembers() {
@@ -39,7 +40,7 @@ async function listMembers() {
     const db = wx.cloud.database();
     const result = await db
       .collection(MEMBERS_COLLECTION)
-      .where({ familyKey: FAMILY_KEY })
+      .where({ familyKey: getFamilyKey() })
       .get();
     const members = sortMembers(result.data.map(normalizeMember));
     setLocalMembers(members);
@@ -69,7 +70,10 @@ async function upsertMember(member) {
   if (isCloudReady()) {
     const db = wx.cloud.database();
     await db.collection(MEMBERS_COLLECTION).doc(normalized.id).set({
-      data: normalized
+      data: {
+        ...normalized,
+        familyKey: getFamilyKey()
+      }
     });
   }
 
@@ -97,7 +101,7 @@ function watchMembers(onChange, onError) {
   const db = wx.cloud.database();
   return db
     .collection(MEMBERS_COLLECTION)
-    .where({ familyKey: FAMILY_KEY })
+    .where({ familyKey: getFamilyKey() })
     .watch({
       onChange(snapshot) {
         const members = sortMembers(snapshot.docs.map(normalizeMember));

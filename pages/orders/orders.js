@@ -1,4 +1,5 @@
 const { listOrders, watchOrders } = require("../../utils/orderStore");
+const { buildSharePath } = require("../../utils/sessionStore");
 
 Page({
   data: {
@@ -72,5 +73,19 @@ Page({
     wx.switchTab({
       url: "/pages/menu/menu"
     });
+  },
+
+  onShareAppMessage() {
+    return {
+      title: "邀请你加入樾哥厨房共享菜单",
+      path: buildSharePath("/pages/profile/profile")
+    };
+  },
+
+  onShareTimeline() {
+    return {
+      title: "樾哥厨房共享菜单",
+      query: buildSharePath("").replace(/^\?/, "")
+    };
   }
 });

@@ -1,0 +1,136 @@
+page {
+  background: linear-gradient(180deg, #fff3e6 0, #f6f5f2 520rpx);
+}
+
+.page {
+  padding: 24rpx 32rpx calc(48rpx + env(safe-area-inset-bottom));
+}
+
+.brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40rpx 0 48rpx;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 152rpx;
+  height: 152rpx;
+  border-radius: 44rpx;
+  background: #ffffff;
+  font-size: 84rpx;
+  line-height: 1;
+  box-shadow: 0 16rpx 40rpx rgba(255, 138, 31, 0.18);
+}
+
+.brand-name {
+  margin-top: 28rpx;
+  font-size: 44rpx;
+  font-weight: 700;
+}
+
+.brand-desc {
+  margin-top: 8rpx;
+  color: var(--text-2);
+  font-size: 26rpx;
+  letter-spacing: 2rpx;
+}
+
+.profile-row {
+  display: flex;
+  align-items: center;
+  gap: 24rpx;
+}
+
+button.avatar-btn {
+  flex-shrink: 0;
+  width: 112rpx !important;
+  height: 112rpx;
+  border-radius: 50% !important;
+  overflow: hidden;
+}
+
+.avatar-img {
+  width: 112rpx;
+  height: 112rpx;
+}
+
+.avatar-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 112rpx;
+  height: 112rpx;
+  border: 2rpx dashed #ffc58f;
+  border-radius: 50%;
+  color: var(--primary-dark);
+  background: var(--primary-light);
+  line-height: 1.1;
+}
+
+.avatar-plus {
+  font-size: 40rpx;
+}
+
+.avatar-tip {
+  font-size: 20rpx;
+}
+
+.mode-body {
+  padding-top: 32rpx;
+}
+
+.field-label {
+  margin-bottom: 16rpx;
+  color: var(--text-2);
+  font-size: 26rpx;
+}
+
+.code-input {
+  font-size: 36rpx;
+  font-weight: 600;
+  letter-spacing: 12rpx;
+}
+
+.switch-row {
+  display: flex;
+  align-items: center;
+  gap: 24rpx;
+  margin-top: 28rpx;
+}
+
+.switch-title {
+  font-size: 28rpx;
+}
+
+.switch-desc {
+  margin-top: 4rpx;
+  color: var(--text-3);
+  font-size: 24rpx;
+}
+
+.tip {
+  margin-top: 24rpx;
+  color: var(--text-3);
+  font-size: 24rpx;
+  line-height: 1.6;
+}
+
+.submit {
+  margin-top: 16rpx;
+}
+
+.setup-step {
+  margin-top: 16rpx;
+  color: var(--text-2);
+  font-size: 26rpx;
+  line-height: 1.6;
+}
+
+.retry {
+  margin-top: 32rpx;
+}

@@ -1,0 +1,51 @@
+.tip {
+  margin-bottom: 20rpx;
+  padding: 0 8rpx;
+  color: var(--text-3);
+  font-size: 24rpx;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  min-height: 116rpx;
+  padding: 0 20rpx 0 28rpx;
+  border-bottom: 2rpx solid var(--border);
+}
+
+.item:last-child {
+  border-bottom: none;
+}
+
+.name {
+  font-size: 30rpx;
+  font-weight: 600;
+}
+
+.count {
+  margin-top: 4rpx;
+  color: var(--text-3);
+  font-size: 24rpx;
+}
+
+.arrows {
+  display: flex;
+  gap: 12rpx;
+}
+
+.arrow {
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: 14rpx;
+  color: var(--text-2);
+  background: #f5f6f7;
+  font-size: 28rpx;
+  font-weight: 600;
+  line-height: 64rpx;
+  text-align: center;
+}
+
+.arrow.disabled {
+  color: #d5d8dc;
+}

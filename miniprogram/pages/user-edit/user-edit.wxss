@@ -1,0 +1,35 @@
+.avatar-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 48rpx 0 36rpx;
+}
+
+button.avatar-btn {
+  width: 160rpx !important;
+  height: 160rpx;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.avatar-img {
+  width: 160rpx;
+  height: 160rpx;
+}
+
+.avatar-empty {
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 50%;
+  color: var(--primary-dark);
+  background: var(--primary-light);
+  font-size: 64rpx;
+  line-height: 160rpx;
+  text-align: center;
+}
+
+.avatar-tip {
+  margin-top: 20rpx;
+  color: var(--text-3);
+  font-size: 24rpx;
+}

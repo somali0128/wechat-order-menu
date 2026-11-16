@@ -1,0 +1,125 @@
+<view class="container">
+  <view wx:if="{{loading && !items.length}}" class="state-text">正在加载...</view>
+
+  <empty-state
+    wx:elif="{{!items.length}}"
+    icon="🧺"
+    title="还没有选菜"
+    desc="去菜单里挑几道想吃的菜，再回来确认食材和用餐时间"
+  >
+    <view class="btn small" hover-class="btn-hover" bindtap="goMenu">去点菜</view>
+  </empty-state>
+
+  <block wx:else>
+    <!-- 已选菜品 -->
+    <view class="card flush">
+      <view class="card-head pad">
+        <view class="card-title">已选菜品</view>
+        <view class="card-link" bindtap="clearAll">清空</view>
+      </view>
+      <view wx:for="{{items}}" wx:key="id" class="item">
+        <view class="item-main" data-id="{{item.id}}" bindtap="openDish">
+          <dish-cover image="{{item.image}}" name="{{item.name}}" width="{{104}}" height="{{104}}" radius="{{14}}" />
+          <view class="item-body">
+            <view class="item-name ellipsis">{{item.name}}</view>
+            <view class="item-sub ellipsis">{{item.ingredientText}}</view>
+          </view>
+        </view>
+        <view class="stepper">
+          <view class="stepper-btn" hover-class="btn-hover" data-id="{{item.id}}" data-delta="-1" bindtap="changeQuantity">−</view>
+          <view class="stepper-value">{{item.quantity}}</view>
+          <view class="stepper-btn" hover-class="btn-hover" data-id="{{item.id}}" data-delta="1" bindtap="changeQuantity">+</view>
+        </view>
+      </view>
+      <view class="add-more" hover-class="cell-hover" bindtap="goMenu">+ 继续点菜</view>
+    </view>
+
+    <!-- 用餐信息 -->
+    <view class="card">
+      <view class="card-head">
+        <view class="card-title">用餐信息</view>
+      </view>
+      <view class="form-item">
+        <view class="form-label">日期</view>
+        <picker class="flex1" mode="date" value="{{mealDate}}" start="{{minDate}}" end="{{maxDate}}" bindchange="onDateChange">
+          <view class="form-picker">
+            <text class="flex1">{{mealDateLabel}}</text>
+            <text class="muted date-raw">{{mealDate}}</text>
+            <view class="cell-arrow"></view>
+          </view>
+        </picker>
+      </view>
+      <view class="form-item">
+        <view class="form-label">餐次</view>
+        <view class="meal-types flex1">
+          <view
+            wx:for="{{mealTypes}}"
+            wx:key="*this"
+            class="meal-type {{mealType === item ? 'active' : ''}}"
+            data-value="{{item}}"
+            bindtap="selectMealType"
+          >{{item}}</view>
+        </view>
+      </view>
+      <view class="form-item">
+        <view class="form-label">人数</view>
+        <view class="flex1"></view>
+        <view class="stepper">
+          <view class="stepper-btn {{people <= 1 ? 'disabled' : ''}}" data-delta="-1" bindtap="changePeople">−</view>
+          <view class="stepper-value">{{people}}</view>
+          <view class="stepper-btn" data-delta="1" bindtap="changePeople">+</view>
+        </view>
+      </view>
+      <view class="form-item top">
+        <view class="form-label">备注</view>
+        <textarea
+          class="form-textarea remark"
+          placeholder="口味、忌口等，选填"
+          placeholder-class="placeholder"
+          maxlength="100"
+          auto-height
+          disable-default-padding
+          value="{{remark}}"
+          bindinput="onRemarkInput"
+        />
+      </view>
+    </view>
+
+    <!-- 食材核对 -->
+    <view class="card">
+      <view class="card-head">
+        <view class="card-title">食材核对</view>
+        <view class="card-link" bindtap="markAll">{{haveCount === ingredients.length ? '全部取消' : '全部都有'}}</view>
+      </view>
+      <view class="hint">勾选家里已有的食材，没勾选的会进入采购清单</view>
+      <view class="ingredients">
+        <view
+          wx:for="{{ingredients}}"
+          wx:key="name"
+          class="ingredient {{item.have ? 'have' : ''}}"
+          data-name="{{item.name}}"
+          bindtap="toggleIngredient"
+        >
+          <view class="check {{item.have ? 'on' : ''}}">✓</view>
+          <text class="ingredient-name ellipsis">{{item.name}}</text>
+        </view>
+      </view>
+      <view class="shopping">
+        <text class="shopping-text">
+          {{ingredients.length - haveCount ? '还需采购 ' + (ingredients.length - haveCount) + ' 样' : '食材已齐全 🎉'}}
+        </text>
+        <view wx:if="{{ingredients.length - haveCount}}" class="btn small ghost" hover-class="btn-hover" bindtap="copyShopping">复制采购清单</view>
+      </view>
+    </view>
+
+    <view class="safe-bottom"></view>
+  </block>
+</view>
+
+<view wx:if="{{items.length}}" class="bottom-bar in-tab">
+  <view class="flex1">
+    <view class="bar-title">共 {{items.length}} 道菜{{totalQuantity > items.length ? '（' + totalQuantity + ' 份）' : ''}}</view>
+    <view class="bar-desc">{{mealDateLabel}} · {{mealType}} · {{people}} 人</view>
+  </view>
+  <view class="btn submit {{submitting ? 'disabled' : ''}}" hover-class="btn-hover" bindtap="submit">提交订单</view>
+</view>

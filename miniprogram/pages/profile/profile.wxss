@@ -1,0 +1,142 @@
+.user {
+  display: flex;
+  align-items: center;
+  gap: 24rpx;
+  padding: 32rpx 28rpx;
+}
+
+.user-avatar {
+  width: 120rpx;
+  height: 120rpx;
+  font-size: 48rpx;
+}
+
+.user-name {
+  font-size: 36rpx;
+  font-weight: 700;
+}
+
+.user-sub {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  margin-top: 10rpx;
+}
+
+.user-family {
+  flex: 1;
+  min-width: 0;
+  color: var(--text-3);
+  font-size: 24rpx;
+}
+
+.stats {
+  display: flex;
+  padding: 28rpx 0;
+}
+
+.stat {
+  flex: 1;
+  text-align: center;
+}
+
+.stat + .stat {
+  border-left: 2rpx solid var(--border);
+}
+
+.stat-value {
+  font-size: 40rpx;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.stat-label {
+  margin-top: 6rpx;
+  color: var(--text-3);
+  font-size: 24rpx;
+}
+
+.invite {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  padding: 24rpx;
+  border-radius: 18rpx;
+  background: var(--primary-light);
+}
+
+.invite-label {
+  color: var(--text-2);
+  font-size: 24rpx;
+}
+
+.invite-code {
+  margin-top: 4rpx;
+  color: var(--primary-dark);
+  font-size: 44rpx;
+  font-weight: 700;
+  letter-spacing: 8rpx;
+  font-family: "SF Mono", Menlo, monospace;
+}
+
+.invite-actions {
+  display: flex;
+  gap: 12rpx;
+}
+
+.reset {
+  margin-top: 16rpx;
+  color: var(--text-3);
+  font-size: 24rpx;
+  text-align: right;
+}
+
+.members-title {
+  margin: 32rpx 0 8rpx;
+  color: var(--text-2);
+  font-size: 26rpx;
+}
+
+.member {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  padding: 16rpx 0;
+}
+
+.member .avatar {
+  width: 72rpx;
+  height: 72rpx;
+  font-size: 30rpx;
+}
+
+.member-name {
+  flex: 1;
+  min-width: 0;
+  font-size: 28rpx;
+}
+
+.member-more {
+  flex-shrink: 0;
+  width: 56rpx;
+  color: var(--text-3);
+  font-size: 32rpx;
+  font-weight: 700;
+  text-align: right;
+}
+
+.cell-icon {
+  flex-shrink: 0;
+  width: 56rpx;
+  font-size: 34rpx;
+}
+
+.leave {
+  justify-content: center;
+}
+
+.leave .cell-title {
+  flex: none;
+  color: var(--red);
+  text-align: center;
+}

@@ -1,0 +1,14 @@
+<view
+  class="cover"
+  style="width:{{width}}rpx;height:{{height}}rpx;border-radius:{{radius}}rpx;background:{{image && !failed ? '#f2f3f5' : background}};"
+>
+  <image
+    wx:if="{{image && !failed}}"
+    class="img"
+    src="{{image}}"
+    mode="aspectFill"
+    lazy-load
+    binderror="onError"
+  />
+  <text wx:else class="initial" style="font-size:{{(width < height ? width : height) * 0.4}}rpx;">{{initial}}</text>
+</view>

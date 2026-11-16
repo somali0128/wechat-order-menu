@@ -1,0 +1,61 @@
+{
+  "pages": [
+    "pages/menu/menu",
+    "pages/cart/cart",
+    "pages/orders/orders",
+    "pages/profile/profile",
+    "pages/welcome/welcome",
+    "pages/dish/dish",
+    "pages/order/order",
+    "pages/manage/manage",
+    "pages/dish-edit/dish-edit",
+    "pages/categories/categories",
+    "pages/user-edit/user-edit"
+  ],
+  "window": {
+    "navigationBarTitleText": "樾哥厨房",
+    "navigationBarBackgroundColor": "#ffffff",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#f6f5f2",
+    "backgroundTextStyle": "dark"
+  },
+  "tabBar": {
+    "color": "#8f959e",
+    "selectedColor": "#ff8a1f",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/menu/menu",
+        "text": "菜单",
+        "iconPath": "images/tab/menu.png",
+        "selectedIconPath": "images/tab/menu-active.png"
+      },
+      {
+        "pagePath": "pages/cart/cart",
+        "text": "下单",
+        "iconPath": "images/tab/cart.png",
+        "selectedIconPath": "images/tab/cart-active.png"
+      },
+      {
+        "pagePath": "pages/orders/orders",
+        "text": "订单",
+        "iconPath": "images/tab/orders.png",
+        "selectedIconPath": "images/tab/orders-active.png"
+      },
+      {
+        "pagePath": "pages/profile/profile",
+        "text": "我的",
+        "iconPath": "images/tab/profile.png",
+        "selectedIconPath": "images/tab/profile-active.png"
+      }
+    ]
+  },
+  "usingComponents": {
+    "dish-cover": "/components/dish-cover/dish-cover",
+    "empty-state": "/components/empty-state/empty-state"
+  },
+  "style": "v2",
+  "lazyCodeLoading": "requiredComponents",
+  "sitemapLocation": "sitemap.json"
+}

@@ -1,7 +1,19 @@
 {
-  "description": "樾哥厨房微信小程序 Demo",
+  "description": "樾哥厨房 - 家庭点菜小程序",
+  "appid": "touristappid",
+  "projectname": "wechat-order-menu",
+  "miniprogramRoot": "miniprogram/",
+  "srcMiniprogramRoot": "miniprogram/",
+  "cloudfunctionRoot": "cloudfunctions/",
+  "compileType": "miniprogram",
+  "libVersion": "3.15.2",
   "packOptions": {
-    "ignore": [],
+    "ignore": [
+      {
+        "value": ".eslintrc.js",
+        "type": "file"
+      }
+    ],
     "include": []
   },
   "setting": {
@@ -48,10 +60,6 @@
     "swc": false,
     "disableSWC": true
   },
-  "compileType": "miniprogram",
-  "libVersion": "3.15.2",
-  "appid": "touristappid",
-  "projectname": "family-menu-ordering",
   "condition": {},
   "editorSetting": {
     "tabIndent": "insertSpaces",

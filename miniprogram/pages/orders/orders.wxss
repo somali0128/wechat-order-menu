@@ -1,0 +1,125 @@
+.tabs {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  padding: 0 24rpx;
+  background: #ffffff;
+}
+
+.tab {
+  position: relative;
+  flex: 1;
+  height: 88rpx;
+  color: var(--text-2);
+  font-size: 28rpx;
+  line-height: 88rpx;
+  text-align: center;
+}
+
+.tab.active {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.tab.active::after {
+  content: "";
+  position: absolute;
+  bottom: 10rpx;
+  left: 50%;
+  width: 40rpx;
+  height: 6rpx;
+  margin-left: -20rpx;
+  border-radius: 3rpx;
+  background: var(--primary);
+}
+
+.list {
+  padding-top: 24rpx;
+}
+
+.order-hover {
+  opacity: 0.9;
+}
+
+.order-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20rpx;
+}
+
+.order-title {
+  flex: 1;
+  min-width: 0;
+  font-size: 32rpx;
+  font-weight: 600;
+}
+
+.covers {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  margin-top: 24rpx;
+}
+
+.cover-wrap {
+  flex-shrink: 0;
+}
+
+.cover-more {
+  flex-shrink: 0;
+  width: 112rpx;
+  height: 112rpx;
+  border-radius: 14rpx;
+  color: var(--text-2);
+  background: #f2f3f5;
+  font-size: 28rpx;
+  line-height: 112rpx;
+  text-align: center;
+}
+
+.covers-side {
+  flex: 1;
+  min-width: 0;
+  text-align: right;
+}
+
+.covers-count {
+  font-size: 28rpx;
+  font-weight: 600;
+}
+
+.covers-people {
+  font-size: 24rpx;
+}
+
+.dish-text {
+  margin-top: 20rpx;
+  color: var(--text-2);
+  font-size: 26rpx;
+  line-height: 1.6;
+}
+
+.remark {
+  margin-top: 8rpx;
+  color: var(--text-3);
+  font-size: 24rpx;
+}
+
+.order-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20rpx;
+  margin-top: 20rpx;
+  padding-top: 20rpx;
+  border-top: 2rpx solid var(--border);
+}
+
+.foot-left {
+  flex: 1;
+  min-width: 0;
+  color: var(--text-3);
+  font-size: 24rpx;
+}

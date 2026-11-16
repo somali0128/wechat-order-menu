@@ -1,0 +1,266 @@
+.pad {
+  margin-bottom: 0;
+  padding: 28rpx 28rpx 8rpx;
+}
+
+/* 状态 */
+.status-card {
+  padding: 32rpx 28rpx;
+  background: linear-gradient(135deg, #fff6ec, #ffffff 70%);
+}
+
+.status-title {
+  font-size: 40rpx;
+  font-weight: 700;
+}
+
+.status-meal {
+  margin-top: 6rpx;
+  color: var(--text-2);
+  font-size: 26rpx;
+}
+
+.cancelled {
+  margin-top: 24rpx;
+  padding: 20rpx 24rpx;
+  border-radius: 14rpx;
+  color: var(--text-3);
+  background: #f2f3f5;
+  font-size: 26rpx;
+}
+
+.flow {
+  display: flex;
+  align-items: flex-start;
+  margin-top: 36rpx;
+}
+
+.flow-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+  width: 112rpx;
+}
+
+.flow-dot {
+  width: 48rpx;
+  height: 48rpx;
+  border-radius: 50%;
+  color: var(--text-3);
+  background: #eceef1;
+  font-size: 24rpx;
+  font-weight: 600;
+  line-height: 48rpx;
+  text-align: center;
+}
+
+.flow-step.done .flow-dot {
+  color: #ffffff;
+  background: var(--primary);
+}
+
+.flow-step.current .flow-dot {
+  box-shadow: 0 0 0 8rpx rgba(255, 138, 31, 0.2);
+}
+
+.flow-text {
+  margin-top: 12rpx;
+  color: var(--text-3);
+  font-size: 24rpx;
+}
+
+.flow-step.done .flow-text {
+  color: var(--text);
+}
+
+.flow-step.current .flow-text {
+  color: var(--primary-dark);
+  font-weight: 600;
+}
+
+.flow-line {
+  flex: 1;
+  height: 4rpx;
+  margin-top: 22rpx;
+  border-radius: 2rpx;
+  background: #eceef1;
+}
+
+.flow-line.done {
+  background: var(--primary);
+}
+
+/* 菜品 */
+.dish {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  padding: 16rpx 28rpx;
+}
+
+.dish-name {
+  flex: 1;
+  min-width: 0;
+  font-size: 30rpx;
+}
+
+.dish-qty {
+  flex-shrink: 0;
+  color: var(--text-2);
+  font-size: 28rpx;
+}
+
+.remark {
+  display: flex;
+  gap: 20rpx;
+  margin: 8rpx 28rpx 0;
+  padding: 24rpx 0 28rpx;
+  border-top: 2rpx solid var(--border);
+  font-size: 26rpx;
+}
+
+.remark-label {
+  flex-shrink: 0;
+  color: var(--text-3);
+}
+
+.remark-text {
+  flex: 1;
+  color: var(--text);
+  line-height: 1.6;
+}
+
+.card.flush > .dish:last-child {
+  padding-bottom: 28rpx;
+}
+
+/* 食材 */
+.hint {
+  margin: -8rpx 0 20rpx;
+  color: var(--text-3);
+  font-size: 24rpx;
+}
+
+.ingredients {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+}
+
+.ingredient {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  width: calc((100% - 32rpx) / 3);
+  height: 72rpx;
+  padding: 0 16rpx;
+  border: 2rpx solid #eceef1;
+  border-radius: 14rpx;
+}
+
+.ingredient.ready {
+  border-color: #bfe6d1;
+  background: var(--green-light);
+}
+
+.ingredient .check {
+  width: 34rpx;
+  height: 34rpx;
+  font-size: 20rpx;
+}
+
+.ingredient-name {
+  flex: 1;
+  min-width: 0;
+  font-size: 26rpx;
+}
+
+.ingredient.ready .ingredient-name {
+  color: var(--text-3);
+  text-decoration: line-through;
+}
+
+.copy-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 24rpx;
+}
+
+/* 信息 */
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 12rpx 0;
+  font-size: 26rpx;
+}
+
+.info-label {
+  color: var(--text-3);
+}
+
+.info-value {
+  color: var(--text);
+}
+
+.copy {
+  margin-left: 12rpx;
+  color: var(--primary-dark);
+}
+
+/* 动态 */
+.log {
+  position: relative;
+  display: flex;
+  gap: 20rpx;
+  padding-bottom: 28rpx;
+}
+
+.log:last-child {
+  padding-bottom: 0;
+}
+
+.log::before {
+  content: "";
+  position: absolute;
+  top: 28rpx;
+  bottom: -4rpx;
+  left: 9rpx;
+  width: 2rpx;
+  background: #eceef1;
+}
+
+.log:last-child::before {
+  display: none;
+}
+
+.log-dot {
+  flex-shrink: 0;
+  width: 20rpx;
+  height: 20rpx;
+  margin-top: 12rpx;
+  border-radius: 50%;
+  background: #d5d8dc;
+}
+
+.log.latest .log-dot {
+  background: var(--primary);
+}
+
+.log-body {
+  flex: 1;
+}
+
+.log-text {
+  font-size: 26rpx;
+}
+
+.log-time {
+  margin-top: 4rpx;
+  color: var(--text-3);
+  font-size: 22rpx;
+}
+
+.bottom-bar .side {
+  flex: 0 0 220rpx;
+}

@@ -1,0 +1,120 @@
+<view wx:if="{{loading}}" class="state-text">正在加载...</view>
+
+<view wx:else class="container">
+  <!-- 图片 -->
+  <view class="card image-card">
+    <view class="image-box" bindtap="chooseImage">
+      <image wx:if="{{image}}" class="image" src="{{image}}" mode="aspectFill" />
+      <view wx:else class="image-empty">
+        <view class="image-plus">+</view>
+        <view class="image-tip">添加菜品照片</view>
+      </view>
+    </view>
+    <view class="image-side">
+      <view class="image-title">菜品照片</view>
+      <view class="image-desc">选填，建议横图。不上传时会用菜名首字做封面。</view>
+      <view class="image-actions">
+        <view class="btn small ghost" hover-class="btn-hover" bindtap="chooseImage">{{image ? '更换' : '上传'}}</view>
+        <view wx:if="{{image}}" class="btn small plain" hover-class="btn-hover" bindtap="removeImage">移除</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 基本信息 -->
+  <view class="card">
+    <view class="card-head">
+      <view class="card-title">基本信息</view>
+    </view>
+    <view class="form-item">
+      <view class="form-label required">菜名</view>
+      <input class="form-input" placeholder="如：番茄炒蛋" placeholder-class="placeholder" maxlength="20" value="{{form.name}}" data-field="name" bindinput="onInput" />
+    </view>
+    <view class="form-item">
+      <view class="form-label required">分类</view>
+      <picker class="flex1" range="{{categoryOptions}}" bindchange="onCategoryChange">
+        <view class="form-picker">
+          <text class="flex1 {{form.category ? '' : 'placeholder'}}">{{form.category || '请选择分类'}}</text>
+          <view class="cell-arrow"></view>
+        </view>
+      </picker>
+    </view>
+    <view class="form-item">
+      <view class="form-label">标签</view>
+      <input class="form-input" placeholder="空格分隔，如：下饭 快手" placeholder-class="placeholder" maxlength="50" value="{{form.tags}}" data-field="tags" bindinput="onInput" />
+    </view>
+    <view class="form-item">
+      <view class="form-label">制作时长</view>
+      <input class="form-input" placeholder="如：20分钟" placeholder-class="placeholder" maxlength="12" value="{{form.cookTime}}" data-field="cookTime" bindinput="onInput" />
+    </view>
+    <view class="form-item">
+      <view class="form-label">热量</view>
+      <input class="form-input" placeholder="如：约160 kcal" placeholder-class="placeholder" maxlength="16" value="{{form.calories}}" data-field="calories" bindinput="onInput" />
+    </view>
+    <view class="form-item">
+      <view class="form-label">蛋白质</view>
+      <input class="form-input" placeholder="如：11g" placeholder-class="placeholder" maxlength="16" value="{{form.protein}}" data-field="protein" bindinput="onInput" />
+    </view>
+    <view class="form-item top">
+      <view class="form-label">简介</view>
+      <textarea
+        class="form-textarea short"
+        placeholder="一句话介绍这道菜"
+        placeholder-class="placeholder"
+        maxlength="200"
+        auto-height
+        disable-default-padding
+        value="{{form.description}}"
+        data-field="description"
+        bindinput="onInput"
+      />
+    </view>
+  </view>
+
+  <!-- 食材 -->
+  <view class="card">
+    <view class="card-head">
+      <view class="card-title">食材<text class="required-mark">*</text></view>
+      <view class="card-extra">下单时自动汇总成采购清单</view>
+    </view>
+    <view wx:for="{{ingredients}}" wx:key="index" class="ingredient-row">
+      <view class="ingredient-no">{{index + 1}}</view>
+      <input
+        class="ingredient-input"
+        placeholder="如：鸡蛋"
+        placeholder-class="placeholder"
+        maxlength="20"
+        value="{{item}}"
+        data-index="{{index}}"
+        bindinput="onIngredientInput"
+      />
+      <view class="ingredient-del" data-index="{{index}}" bindtap="removeIngredient">×</view>
+    </view>
+    <view class="add-row" hover-class="cell-hover" bindtap="addIngredient">+ 添加食材</view>
+  </view>
+
+  <!-- 做法 -->
+  <view class="card">
+    <view class="card-head">
+      <view class="card-title">做法</view>
+      <view class="card-extra">每行一个步骤</view>
+    </view>
+    <textarea
+      class="form-textarea steps"
+      placeholder="每行写一个步骤，例如：鸡蛋打散炒熟盛出"
+      placeholder-class="placeholder"
+      maxlength="2000"
+      auto-height
+      disable-default-padding
+      value="{{form.steps}}"
+      data-field="steps"
+      bindinput="onInput"
+    />
+  </view>
+
+  <view class="safe-bottom"></view>
+</view>
+
+<view wx:if="{{!loading}}" class="bottom-bar">
+  <view wx:if="{{id}}" class="btn danger side" hover-class="btn-hover" bindtap="remove">删除</view>
+  <view class="btn {{saving ? 'disabled' : ''}}" hover-class="btn-hover" bindtap="save">保存</view>
+</view>

@@ -1,0 +1,27 @@
+<view class="container">
+  <view class="card avatar-card">
+    <button class="btn-reset avatar-btn" open-type="chooseAvatar" bindchooseavatar="onChooseAvatar">
+      <image wx:if="{{avatar}}" class="avatar-img" src="{{avatar}}" mode="aspectFill" />
+      <view wx:else class="avatar-empty">+</view>
+    </button>
+    <view class="avatar-tip">点击更换头像</view>
+  </view>
+
+  <view class="card">
+    <view class="form-item">
+      <view class="form-label">昵称</view>
+      <input
+        class="form-input"
+        type="nickname"
+        placeholder="请输入昵称"
+        placeholder-class="placeholder"
+        maxlength="20"
+        value="{{nickName}}"
+        bindinput="onNickInput"
+        bindblur="onNickInput"
+      />
+    </view>
+  </view>
+
+  <view class="btn block {{saving ? 'disabled' : ''}}" hover-class="btn-hover" bindtap="save">保存</view>
+</view>

@@ -1,0 +1,68 @@
+<view class="tabs">
+  <view
+    wx:for="{{tabs}}"
+    wx:key="key"
+    class="tab {{tab === item.key ? 'active' : ''}}"
+    data-key="{{item.key}}"
+    bindtap="switchTab"
+  >{{item.name}}</view>
+</view>
+
+<view class="container list">
+  <view wx:if="{{loading}}" class="state-text">正在加载订单...</view>
+
+  <empty-state wx:elif="{{errorText}}" icon="⚠️" title="订单加载失败" desc="{{errorText}}">
+    <view class="btn small ghost" hover-class="btn-hover" bindtap="reload">重新加载</view>
+  </empty-state>
+
+  <empty-state
+    wx:elif="{{!list.length}}"
+    icon="📋"
+    title="{{tab === 'active' ? '暂无进行中的订单' : '还没有订单'}}"
+    desc="选好菜提交后，全家都能在这里看到"
+  >
+    <view class="btn small" hover-class="btn-hover" bindtap="goMenu">去点菜</view>
+  </empty-state>
+
+  <block wx:else>
+    <view
+      wx:for="{{list}}"
+      wx:key="id"
+      class="card order"
+      hover-class="order-hover"
+      data-id="{{item.id}}"
+      bindtap="openOrder"
+    >
+      <view class="order-head">
+        <view class="order-title ellipsis">{{item.title}}</view>
+        <text class="tag {{item.tone}}">{{item.statusText}}</text>
+      </view>
+
+      <view class="covers">
+        <view wx:for="{{item.covers}}" wx:for-item="dish" wx:key="dishId" class="cover-wrap">
+          <dish-cover image="{{dish.image}}" name="{{dish.name}}" width="{{112}}" height="{{112}}" radius="{{14}}" />
+        </view>
+        <view wx:if="{{item.more}}" class="cover-more">+{{item.more}}</view>
+        <view class="covers-side">
+          <view class="covers-count">{{item.dishCount}} 道菜</view>
+          <view class="muted covers-people">{{item.people}} 人用餐</view>
+        </view>
+      </view>
+
+      <view class="dish-text ellipsis-2">{{item.dishText}}</view>
+      <view wx:if="{{item.remark}}" class="remark ellipsis">备注：{{item.remark}}</view>
+
+      <view class="order-foot">
+        <view class="foot-left ellipsis">{{item.creatorName}} · {{item.timeText}}</view>
+        <block wx:if="{{item.active}}">
+          <text wx:if="{{item.missing}}" class="tag red">待买 {{item.missing}} 样</text>
+          <text wx:else class="tag green">食材齐全</text>
+        </block>
+      </view>
+    </view>
+
+    <view class="load-more">
+      {{loadingMore ? '加载中...' : (hasMore ? '上拉加载更多' : '没有更多了')}}
+    </view>
+  </block>
+</view>

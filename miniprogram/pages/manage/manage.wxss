@@ -1,0 +1,65 @@
+.top {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  padding: 16rpx 24rpx 0;
+  background: #ffffff;
+}
+
+.search {
+  height: 72rpx;
+  padding: 0 28rpx;
+  border-radius: 36rpx;
+  background: #f5f6f7;
+}
+
+.search-input {
+  height: 72rpx;
+  font-size: 28rpx;
+}
+
+.chips {
+  white-space: nowrap;
+  padding: 20rpx 0;
+}
+
+.chip {
+  display: inline-block;
+  height: 56rpx;
+  margin-right: 16rpx;
+  padding: 0 28rpx;
+  border-radius: 28rpx;
+  color: var(--text-2);
+  background: #f2f3f5;
+  font-size: 26rpx;
+  line-height: 56rpx;
+}
+
+.chip.active {
+  color: #ffffff;
+  background: var(--primary);
+  font-weight: 600;
+}
+
+.row-item {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  padding: 20rpx 28rpx;
+  border-bottom: 2rpx solid var(--border);
+}
+
+.row-item:last-child {
+  border-bottom: none;
+}
+
+.name {
+  font-size: 30rpx;
+  font-weight: 600;
+}
+
+.sub {
+  margin-top: 6rpx;
+  color: var(--text-3);
+  font-size: 24rpx;
+}

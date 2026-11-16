@@ -1,0 +1,145 @@
+.pad {
+  margin-bottom: 0;
+  padding: 28rpx 28rpx 12rpx;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  padding: 18rpx 28rpx;
+}
+
+.item-main {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+  gap: 20rpx;
+}
+
+.item-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.item-name {
+  font-size: 30rpx;
+  font-weight: 600;
+}
+
+.item-sub {
+  margin-top: 6rpx;
+  color: var(--text-3);
+  font-size: 24rpx;
+}
+
+.add-more {
+  margin-top: 8rpx;
+  padding: 24rpx 0;
+  border-top: 2rpx solid var(--border);
+  color: var(--primary-dark);
+  font-size: 26rpx;
+  text-align: center;
+}
+
+.date-raw {
+  margin-left: 12rpx;
+  font-size: 24rpx;
+}
+
+.meal-types {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12rpx;
+}
+
+.meal-type {
+  width: 100rpx;
+  height: 56rpx;
+  border-radius: 28rpx;
+  color: var(--text-2);
+  background: #f2f3f5;
+  font-size: 24rpx;
+  line-height: 56rpx;
+  text-align: center;
+}
+
+.meal-type.active {
+  color: #ffffff;
+  background: var(--primary);
+  font-weight: 600;
+}
+
+.remark {
+  min-height: 48rpx;
+}
+
+.hint {
+  margin: -8rpx 0 20rpx;
+  color: var(--text-3);
+  font-size: 24rpx;
+}
+
+.ingredients {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+}
+
+.ingredient {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  width: calc((100% - 32rpx) / 3);
+  height: 72rpx;
+  padding: 0 16rpx;
+  border: 2rpx solid #eceef1;
+  border-radius: 14rpx;
+}
+
+.ingredient.have {
+  border-color: #bfe6d1;
+  background: var(--green-light);
+}
+
+.ingredient .check {
+  width: 34rpx;
+  height: 34rpx;
+  font-size: 20rpx;
+}
+
+.ingredient-name {
+  flex: 1;
+  min-width: 0;
+  font-size: 26rpx;
+}
+
+.shopping {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 60rpx;
+  margin-top: 24rpx;
+  padding-top: 24rpx;
+  border-top: 2rpx solid var(--border);
+}
+
+.shopping-text {
+  color: var(--text-2);
+  font-size: 26rpx;
+}
+
+.bar-title {
+  font-size: 30rpx;
+  font-weight: 600;
+}
+
+.bar-desc {
+  color: var(--text-3);
+  font-size: 24rpx;
+}
+
+.bottom-bar .submit {
+  flex: 0 0 240rpx;
+}

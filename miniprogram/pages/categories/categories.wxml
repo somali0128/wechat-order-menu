@@ -1,0 +1,39 @@
+<view class="container">
+  <view class="tip">分类顺序就是菜单页左侧的显示顺序，可通过箭头调整。</view>
+
+  <view wx:if="{{loading}}" class="state-text">正在加载...</view>
+
+  <empty-state wx:elif="{{!list.length}}" icon="🗂" title="还没有分类" desc="新建分类后，添加菜品时就可以选择了" />
+
+  <view wx:else class="card flush">
+    <view wx:for="{{list}}" wx:key="name" class="item">
+      <view class="flex1" data-index="{{index}}" bindtap="more">
+        <view class="name ellipsis">{{item.name}}</view>
+        <view class="count">{{item.count}} 道菜</view>
+      </view>
+      <view class="arrows">
+        <view
+          class="arrow {{index === 0 ? 'disabled' : ''}}"
+          hover-class="cell-hover"
+          data-index="{{index}}"
+          data-delta="-1"
+          bindtap="move"
+        >↑</view>
+        <view
+          class="arrow {{index === list.length - 1 ? 'disabled' : ''}}"
+          hover-class="cell-hover"
+          data-index="{{index}}"
+          data-delta="1"
+          bindtap="move"
+        >↓</view>
+        <view class="arrow" hover-class="cell-hover" data-index="{{index}}" bindtap="more">···</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="safe-bottom"></view>
+</view>
+
+<view class="bottom-bar">
+  <view class="btn" hover-class="btn-hover" bindtap="add">+ 新建分类</view>
+</view>

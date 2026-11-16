@@ -1,0 +1,112 @@
+<view wx:if="{{loading}}" class="state-text">正在加载...</view>
+
+<empty-state wx:elif="{{!order}}" icon="📋" title="{{errorText || '订单不存在'}}">
+  <view class="btn small ghost" hover-class="btn-hover" bindtap="back">返回</view>
+</empty-state>
+
+<view wx:else class="container">
+  <!-- 状态 -->
+  <view class="card status-card">
+    <view class="status-head">
+      <view class="status-title">{{meta.text}}</view>
+      <view class="status-meal">{{mealText}}</view>
+    </view>
+    <view wx:if="{{order.status === 'cancelled'}}" class="cancelled">该订单已取消</view>
+    <view wx:else class="flow">
+      <block wx:for="{{steps}}" wx:key="text">
+        <view class="flow-step {{item.done ? 'done' : ''}} {{item.current ? 'current' : ''}}">
+          <view class="flow-dot">{{item.done ? '✓' : index + 1}}</view>
+          <view class="flow-text">{{item.text}}</view>
+        </view>
+        <view wx:if="{{index < steps.length - 1}}" class="flow-line {{steps[index + 1].done ? 'done' : ''}}"></view>
+      </block>
+    </view>
+  </view>
+
+  <!-- 菜品 -->
+  <view class="card flush">
+    <view class="card-head pad">
+      <view class="card-title">菜品</view>
+      <view class="card-extra">{{order.dishes.length}} 道 · {{order.people}} 人</view>
+    </view>
+    <view wx:for="{{order.dishes}}" wx:key="dishId" class="dish" hover-class="cell-hover" data-id="{{item.dishId}}" bindtap="openDish">
+      <dish-cover image="{{item.image}}" name="{{item.name}}" width="{{88}}" height="{{88}}" radius="{{12}}" />
+      <view class="dish-name ellipsis">{{item.name}}</view>
+      <view class="dish-qty">× {{item.quantity}}</view>
+    </view>
+    <view wx:if="{{order.remark}}" class="remark">
+      <text class="remark-label">备注</text>
+      <text class="remark-text">{{order.remark}}</text>
+    </view>
+  </view>
+
+  <!-- 食材 -->
+  <view class="card">
+    <view class="card-head">
+      <view class="card-title">食材清单</view>
+      <view class="card-extra">{{missingCount ? '待买 ' + missingCount + ' 样' : '已齐全'}}</view>
+    </view>
+    <view wx:if="{{order.canCancel}}" class="hint">买到或家里有的食材点一下打勾，家人会同步看到</view>
+    <view class="ingredients">
+      <view
+        wx:for="{{order.ingredients}}"
+        wx:key="name"
+        class="ingredient {{item.ready ? 'ready' : ''}}"
+        data-index="{{index}}"
+        bindtap="toggleIngredient"
+      >
+        <view class="check {{item.ready ? 'on' : ''}}">✓</view>
+        <text class="ingredient-name ellipsis">{{item.name}}</text>
+      </view>
+    </view>
+    <view wx:if="{{missingCount && order.canCancel}}" class="copy-row">
+      <view class="btn small ghost" hover-class="btn-hover" bindtap="copyShopping">复制采购清单</view>
+    </view>
+  </view>
+
+  <!-- 订单信息 -->
+  <view class="card">
+    <view class="card-head">
+      <view class="card-title">订单信息</view>
+    </view>
+    <view class="info-row">
+      <text class="info-label">下单人</text>
+      <text class="info-value">{{order.creatorName}}</text>
+    </view>
+    <view class="info-row">
+      <text class="info-label">下单时间</text>
+      <text class="info-value">{{createdText}}</text>
+    </view>
+    <view class="info-row" bindtap="copyNo">
+      <text class="info-label">订单号</text>
+      <text class="info-value">{{order.orderNo}} <text class="copy">复制</text></text>
+    </view>
+  </view>
+
+  <!-- 动态 -->
+  <view class="card">
+    <view class="card-head">
+      <view class="card-title">订单动态</view>
+    </view>
+    <view wx:for="{{logs}}" wx:key="index" class="log {{index === 0 ? 'latest' : ''}}">
+      <view class="log-dot"></view>
+      <view class="log-body">
+        <view class="log-text">{{item.text}}</view>
+        <view class="log-time">{{item.time}}</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="safe-bottom"></view>
+</view>
+
+<view wx:if="{{order}}" class="bottom-bar">
+  <block wx:if="{{order.canCancel}}">
+    <view class="btn plain side" hover-class="btn-hover" bindtap="cancel">取消订单</view>
+    <view class="btn {{busy ? 'disabled' : ''}}" hover-class="btn-hover" bindtap="advance">{{nextAction.text}}</view>
+  </block>
+  <block wx:else>
+    <view wx:if="{{order.canDelete}}" class="btn plain side" hover-class="btn-hover" bindtap="remove">删除</view>
+    <view class="btn" hover-class="btn-hover" bindtap="reorder">再来一单</view>
+  </block>
+</view>

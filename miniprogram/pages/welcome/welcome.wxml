@@ -1,0 +1,95 @@
+<view class="page">
+  <view class="brand">
+    <view class="logo">🍳</view>
+    <view class="brand-name">{{appName}}</view>
+    <view class="brand-desc">家人一起点菜 · 备菜 · 开饭</view>
+  </view>
+
+  <view wx:if="{{status === 'loading'}}" class="state-text">正在登录...</view>
+
+  <view wx:elif="{{status === 'unconfigured'}}" class="card setup">
+    <view class="card-title">还差一步配置</view>
+    <view class="setup-step">1. 在开发者工具中开通「云开发」，复制环境 ID</view>
+    <view class="setup-step">2. 填入 miniprogram/utils/config.js 的 CLOUD_ENV_ID</view>
+    <view class="setup-step">3. 右键 cloudfunctions/api →「上传并部署：云端安装依赖」</view>
+    <view class="setup-step">4. 重新编译即可使用</view>
+  </view>
+
+  <view wx:elif="{{status === 'error'}}" class="card setup">
+    <view class="card-title">连接失败</view>
+    <view class="setup-step">{{errorText}}</view>
+    <view class="btn block retry" hover-class="btn-hover" bindtap="init">重试</view>
+  </view>
+
+  <block wx:else>
+    <view class="card">
+      <view class="card-head">
+        <view class="card-title">你的信息</view>
+        <view class="card-extra">家人会看到</view>
+      </view>
+      <view class="profile-row">
+        <button class="btn-reset avatar-btn" open-type="chooseAvatar" bindchooseavatar="onChooseAvatar">
+          <image wx:if="{{avatar}}" class="avatar-img" src="{{avatar}}" mode="aspectFill" />
+          <view wx:else class="avatar-empty">
+            <text class="avatar-plus">+</text>
+            <text class="avatar-tip">头像</text>
+          </view>
+        </button>
+        <input
+          class="input-box flex1"
+          type="nickname"
+          placeholder="点击填写昵称"
+          placeholder-class="placeholder"
+          maxlength="20"
+          value="{{nickName}}"
+          bindinput="onNickInput"
+          bindblur="onNickInput"
+        />
+      </view>
+    </view>
+
+    <view class="card">
+      <view class="segment">
+        <view class="segment-item {{mode === 'create' ? 'active' : ''}}" data-mode="create" bindtap="switchMode">创建家庭</view>
+        <view class="segment-item {{mode === 'join' ? 'active' : ''}}" data-mode="join" bindtap="switchMode">加入家庭</view>
+      </view>
+
+      <view wx:if="{{mode === 'create'}}" class="mode-body">
+        <view class="field-label">家庭名称</view>
+        <input
+          class="input-box"
+          placeholder="例如：樾哥的家"
+          placeholder-class="placeholder"
+          maxlength="16"
+          value="{{familyName}}"
+          bindinput="onFamilyInput"
+        />
+        <view class="switch-row">
+          <view class="flex1">
+            <view class="switch-title">导入示例菜单</view>
+            <view class="switch-desc">7 道家常菜，之后可随时修改或删除</view>
+          </view>
+          <switch checked="{{withSample}}" color="#ff8a1f" bindchange="onSampleChange" />
+        </view>
+        <view class="tip">创建后你将成为家庭管理员，可邀请家人加入。</view>
+      </view>
+
+      <view wx:else class="mode-body">
+        <view class="field-label">邀请码</view>
+        <input
+          class="input-box code-input"
+          placeholder="请输入 6 位邀请码"
+          placeholder-class="placeholder"
+          maxlength="6"
+          value="{{code}}"
+          bindinput="onCodeInput"
+        />
+        <view class="tip">邀请码在家人的「我的 → 家庭」中查看，也可以让家人直接分享邀请给你。</view>
+      </view>
+    </view>
+
+    <view class="btn block submit {{submitting ? 'disabled' : ''}}" hover-class="btn-hover" bindtap="submit">
+      {{mode === 'create' ? '创建家庭' : '加入家庭'}}
+    </view>
+  </block>
+</view>

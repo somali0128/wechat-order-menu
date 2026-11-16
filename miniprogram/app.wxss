@@ -1,0 +1,491 @@
+/* ========== 设计变量 ========== */
+page {
+  --primary: #ff8a1f;
+  --primary-dark: #e86f00;
+  --primary-light: #fff3e6;
+  --blue: #3370ff;
+  --blue-light: #ebf1ff;
+  --green: #1f9d63;
+  --green-light: #e7f6ee;
+  --purple: #7b61ff;
+  --purple-light: #f0edff;
+  --red: #e5484d;
+  --red-light: #fdeeee;
+  --text: #1f2329;
+  --text-2: #5c6370;
+  --text-3: #9aa0a8;
+  --border: #f0f1f3;
+  --bg: #f6f5f2;
+  --card: #ffffff;
+
+  min-height: 100%;
+  color: var(--text);
+  background: var(--bg);
+  font-size: 28rpx;
+  line-height: 1.5;
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", "Microsoft YaHei", sans-serif;
+}
+
+view,
+text,
+input,
+textarea,
+button,
+image,
+scroll-view,
+picker {
+  box-sizing: border-box;
+}
+
+/* ========== 布局 ========== */
+.container {
+  padding: 24rpx 24rpx 40rpx;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+}
+
+.between {
+  justify-content: space-between;
+}
+
+.flex1 {
+  flex: 1;
+  min-width: 0;
+}
+
+.ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.ellipsis-2 {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.safe-bottom {
+  height: calc(160rpx + env(safe-area-inset-bottom));
+}
+
+/* ========== 卡片 ========== */
+.card {
+  margin-bottom: 24rpx;
+  padding: 28rpx;
+  border-radius: 24rpx;
+  background: var(--card);
+}
+
+.card.flush {
+  padding: 0;
+  overflow: hidden;
+}
+
+.card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 48rpx;
+  margin-bottom: 20rpx;
+}
+
+.card-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.card-extra {
+  flex-shrink: 0;
+  margin-left: 20rpx;
+  font-size: 24rpx;
+  color: var(--text-3);
+}
+
+.card-link {
+  flex-shrink: 0;
+  margin-left: 20rpx;
+  font-size: 26rpx;
+  color: var(--primary-dark);
+}
+
+.muted {
+  color: var(--text-3);
+}
+
+.text-2 {
+  color: var(--text-2);
+}
+
+/* ========== 按钮（用 view 实现，避免原生 button 默认样式） ========== */
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 88rpx;
+  padding: 0 36rpx;
+  border-radius: 44rpx;
+  color: #ffffff;
+  background: var(--primary);
+  font-size: 30rpx;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.btn.ghost {
+  color: var(--primary-dark);
+  background: var(--primary-light);
+}
+
+.btn.plain {
+  color: var(--text);
+  background: #ffffff;
+  border: 2rpx solid #e3e5e8;
+}
+
+.btn.danger {
+  color: var(--red);
+  background: var(--red-light);
+}
+
+.btn.small {
+  height: 60rpx;
+  padding: 0 24rpx;
+  border-radius: 30rpx;
+  font-size: 26rpx;
+}
+
+.btn.block {
+  width: 100%;
+}
+
+.btn.disabled {
+  opacity: 0.45;
+}
+
+.btn-hover {
+  opacity: 0.8;
+}
+
+/* 需要 open-type 时使用的原生按钮重置 */
+button.btn-reset {
+  display: block;
+  width: auto !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border-radius: 0;
+  background: transparent !important;
+  font-size: inherit !important;
+  font-weight: inherit !important;
+  line-height: inherit !important;
+  color: inherit !important;
+  text-align: inherit;
+  overflow: visible;
+}
+
+button.btn-reset::after {
+  border: none;
+}
+
+/* ========== 标签 ========== */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  height: 40rpx;
+  padding: 0 14rpx;
+  border-radius: 8rpx;
+  font-size: 22rpx;
+  line-height: 1;
+  white-space: nowrap;
+  color: var(--text-2);
+  background: #f2f3f5;
+}
+
+.tag.orange {
+  color: var(--primary-dark);
+  background: var(--primary-light);
+}
+
+.tag.green {
+  color: var(--green);
+  background: var(--green-light);
+}
+
+.tag.blue {
+  color: var(--blue);
+  background: var(--blue-light);
+}
+
+.tag.purple {
+  color: var(--purple);
+  background: var(--purple-light);
+}
+
+.tag.red {
+  color: var(--red);
+  background: var(--red-light);
+}
+
+.tag.gray {
+  color: var(--text-3);
+  background: #f2f3f5;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12rpx;
+}
+
+/* ========== 列表单元格 ========== */
+.cell {
+  display: flex;
+  align-items: center;
+  min-height: 108rpx;
+  padding: 0 28rpx;
+  border-bottom: 2rpx solid var(--border);
+  background: #ffffff;
+}
+
+.cell:last-child {
+  border-bottom: none;
+}
+
+.cell-title {
+  flex: 1;
+  min-width: 0;
+  font-size: 30rpx;
+}
+
+.cell-value {
+  flex-shrink: 0;
+  margin-left: 20rpx;
+  font-size: 26rpx;
+  color: var(--text-3);
+}
+
+.cell-arrow {
+  flex-shrink: 0;
+  width: 16rpx;
+  height: 16rpx;
+  margin-left: 16rpx;
+  border-top: 3rpx solid #c4c8ce;
+  border-right: 3rpx solid #c4c8ce;
+  transform: rotate(45deg);
+}
+
+.cell-hover {
+  background: #f7f8fa;
+}
+
+/* ========== 表单 ========== */
+.form-item {
+  display: flex;
+  align-items: center;
+  min-height: 104rpx;
+  border-bottom: 2rpx solid var(--border);
+}
+
+.form-item:last-child {
+  border-bottom: none;
+}
+
+.form-item.top {
+  align-items: flex-start;
+  padding: 28rpx 0;
+}
+
+.form-label {
+  flex-shrink: 0;
+  width: 168rpx;
+  font-size: 28rpx;
+  color: var(--text-2);
+}
+
+.form-label.required::after {
+  content: " *";
+  color: var(--red);
+}
+
+.form-input {
+  flex: 1;
+  min-width: 0;
+  height: 104rpx;
+  font-size: 28rpx;
+  line-height: 104rpx;
+  color: var(--text);
+}
+
+.form-picker {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+  height: 104rpx;
+}
+
+.form-textarea {
+  flex: 1;
+  width: 100%;
+  min-height: 160rpx;
+  font-size: 28rpx;
+  line-height: 1.6;
+  color: var(--text);
+}
+
+.placeholder {
+  color: #b8bcc4;
+}
+
+.input-box {
+  width: 100%;
+  height: 88rpx;
+  padding: 0 28rpx;
+  border-radius: 16rpx;
+  background: #f5f6f7;
+  font-size: 30rpx;
+  line-height: 88rpx;
+}
+
+/* ========== 勾选框 ========== */
+.check {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 40rpx;
+  height: 40rpx;
+  border: 3rpx solid #c9cdd4;
+  border-radius: 50%;
+  color: transparent;
+  font-size: 24rpx;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.check.on {
+  border-color: var(--green);
+  color: #ffffff;
+  background: var(--green);
+}
+
+/* ========== 步进器 ========== */
+.stepper {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.stepper-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52rpx;
+  height: 52rpx;
+  border-radius: 50%;
+  color: var(--primary-dark);
+  background: var(--primary-light);
+  font-size: 34rpx;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.stepper-btn.disabled {
+  color: #c4c8ce;
+  background: #f2f3f5;
+}
+
+.stepper-value {
+  width: 64rpx;
+  font-size: 30rpx;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* ========== 分段选择 ========== */
+.segment {
+  display: flex;
+  padding: 6rpx;
+  border-radius: 16rpx;
+  background: #f2f3f5;
+}
+
+.segment-item {
+  flex: 1;
+  height: 64rpx;
+  border-radius: 12rpx;
+  color: var(--text-2);
+  font-size: 26rpx;
+  line-height: 64rpx;
+  text-align: center;
+}
+
+.segment-item.active {
+  color: var(--primary-dark);
+  background: #ffffff;
+  font-weight: 600;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.06);
+}
+
+/* ========== 底部操作栏 ========== */
+.bottom-bar {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  padding: 20rpx 24rpx calc(20rpx + env(safe-area-inset-bottom));
+  background: #ffffff;
+  box-shadow: 0 -4rpx 24rpx rgba(0, 0, 0, 0.05);
+}
+
+/* tab 页内底部栏位于 tabBar 之上，不需要安全区 */
+.bottom-bar.in-tab {
+  padding-bottom: 20rpx;
+}
+
+.bottom-bar .btn {
+  flex: 1;
+}
+
+/* ========== 头像 ========== */
+.avatar {
+  flex-shrink: 0;
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  background: #f2f3f5;
+}
+
+.avatar-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  background: linear-gradient(135deg, #ffb35c, #ff8a1f);
+  font-weight: 600;
+}
+
+/* ========== 状态 ========== */
+.state-text {
+  padding: 120rpx 0;
+  color: var(--text-3);
+  font-size: 26rpx;
+  text-align: center;
+}
+
+.load-more {
+  padding: 24rpx 0 8rpx;
+  color: var(--text-3);
+  font-size: 24rpx;
+  text-align: center;
+}

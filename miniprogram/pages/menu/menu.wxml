@@ -1,0 +1,104 @@
+<view class="page">
+  <view class="header">
+    <view class="header-top">
+      <view class="flex1">
+        <view class="hello">今天想吃什么？</view>
+        <view class="slogan ellipsis">{{slogan}}</view>
+      </view>
+      <view class="family ellipsis">🏠 {{familyName}}</view>
+    </view>
+    <view class="search">
+      <view class="search-icon"></view>
+      <input
+        class="search-input"
+        placeholder="搜索菜名、食材或标签"
+        placeholder-class="placeholder"
+        value="{{keyword}}"
+        confirm-type="search"
+        bindinput="onSearch"
+      />
+      <view wx:if="{{keyword}}" class="search-clear" bindtap="clearSearch">×</view>
+    </view>
+  </view>
+
+  <view class="body">
+    <scroll-view wx:if="{{!keyword && hasDishes}}" class="sidebar" scroll-y enhanced show-scrollbar="{{false}}">
+      <view
+        wx:for="{{categories}}"
+        wx:key="name"
+        class="side-item {{active === item.name ? 'active' : ''}}"
+        data-name="{{item.name}}"
+        bindtap="selectCategory"
+      >
+        <text class="side-text">{{item.name}}</text>
+        <text wx:if="{{item.selected}}" class="side-badge">{{item.selected}}</text>
+      </view>
+    </scroll-view>
+
+    <scroll-view
+      class="list"
+      scroll-y
+      enhanced
+      show-scrollbar="{{false}}"
+      refresher-enabled
+      refresher-triggered="{{refreshing}}"
+      bindrefresherrefresh="onRefresh"
+    >
+      <view wx:if="{{loading}}" class="state-text">正在加载菜单...</view>
+
+      <empty-state wx:elif="{{errorText}}" icon="⚠️" title="菜单加载失败" desc="{{errorText}}">
+        <view class="btn small ghost" hover-class="btn-hover" bindtap="load">重新加载</view>
+      </empty-state>
+
+      <empty-state wx:elif="{{!hasDishes}}" icon="📝" title="菜单还是空的" desc="先添加几道家里常做的菜吧">
+        <view class="btn small" hover-class="btn-hover" bindtap="goAdd">添加菜品</view>
+      </empty-state>
+
+      <empty-state wx:elif="{{!list.length}}" icon="🔍" title="没有找到相关菜品" desc="换个关键词试试" />
+
+      <block wx:else>
+        <view class="list-title">{{listTitle}}<text class="list-count">{{list.length}} 道</text></view>
+        <view
+          wx:for="{{list}}"
+          wx:key="id"
+          class="dish"
+          hover-class="dish-hover"
+          data-id="{{item.id}}"
+          bindtap="openDish"
+        >
+          <dish-cover image="{{item.image}}" name="{{item.name}}" width="{{152}}" height="{{152}}" radius="{{16}}" />
+          <view class="dish-body">
+            <view class="dish-name ellipsis">{{item.name}}</view>
+            <view class="dish-desc ellipsis">{{item.description}}</view>
+            <view class="dish-tags">
+              <text wx:if="{{item.cookTime}}" class="tag blue">⏱ {{item.cookTime}}</text>
+              <text wx:for="{{item.tags}}" wx:for-item="tag" wx:key="*this" class="tag orange">{{tag}}</text>
+            </view>
+            <view class="dish-foot">
+              <text class="dish-meta ellipsis">{{item.metaText}}</text>
+              <view
+                class="pick {{item.selected ? 'on' : ''}}"
+                hover-class="btn-hover"
+                data-id="{{item.id}}"
+                catchtap="toggle"
+              >{{item.selected ? '✓ 已选' : '+ 想吃'}}</view>
+            </view>
+          </view>
+        </view>
+        <view class="list-end">— 共 {{list.length}} 道 —</view>
+      </block>
+    </scroll-view>
+  </view>
+
+  <view class="cart-bar">
+    <view class="cart-icon">
+      <text>🧺</text>
+      <text wx:if="{{selectedCount}}" class="cart-badge">{{selectedCount}}</text>
+    </view>
+    <view class="flex1">
+      <view class="cart-title">{{selectedCount ? '已选 ' + selectedCount + ' 道菜' : '还没有选菜'}}</view>
+      <view class="cart-desc">{{selectedCount ? '去确认食材和用餐时间' : '点击「想吃」把菜加入清单'}}</view>
+    </view>
+    <view class="cart-btn {{selectedCount ? '' : 'disabled'}}" hover-class="btn-hover" bindtap="goCart">去下单</view>
+  </view>
+</view>

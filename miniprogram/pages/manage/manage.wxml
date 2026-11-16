@@ -1,0 +1,50 @@
+<view class="top">
+  <view class="search">
+    <input
+      class="search-input"
+      placeholder="搜索菜名或食材"
+      placeholder-class="placeholder"
+      value="{{keyword}}"
+      bindinput="onSearch"
+    />
+  </view>
+  <scroll-view class="chips" scroll-x enhanced show-scrollbar="{{false}}">
+    <view
+      wx:for="{{categories}}"
+      wx:key="*this"
+      class="chip {{active === item ? 'active' : ''}}"
+      data-name="{{item}}"
+      bindtap="selectCategory"
+    >{{item}}</view>
+  </scroll-view>
+</view>
+
+<view class="container">
+  <view wx:if="{{loading}}" class="state-text">正在加载...</view>
+
+  <empty-state
+    wx:elif="{{!list.length}}"
+    icon="🍲"
+    title="{{total ? '没有符合条件的菜品' : '还没有菜品'}}"
+    desc="{{total ? '换个分类或关键词试试' : '点击下方按钮添加第一道菜'}}"
+  />
+
+  <view wx:else class="card flush">
+    <view wx:for="{{list}}" wx:key="id" class="row-item" hover-class="cell-hover" data-id="{{item.id}}" bindtap="edit">
+      <dish-cover image="{{item.image}}" name="{{item.name}}" width="{{96}}" height="{{96}}" radius="{{12}}" />
+      <view class="flex1">
+        <view class="name ellipsis">{{item.name}}</view>
+        <view class="sub ellipsis">{{item.sub}}</view>
+      </view>
+      <text class="tag">{{item.category}}</text>
+      <view class="cell-arrow"></view>
+    </view>
+  </view>
+
+  <view class="safe-bottom"></view>
+</view>
+
+<view class="bottom-bar">
+  <view class="btn plain" hover-class="btn-hover" bindtap="goCategories">分类管理</view>
+  <view class="btn" hover-class="btn-hover" bindtap="add">+ 新增菜品</view>
+</view>

@@ -58,7 +58,7 @@
         <view class="field-label">家庭名称</view>
         <input
           class="input-box"
-          placeholder="例如：樾哥的家"
+          placeholder="例如：索玛的家"
           placeholder-class="placeholder"
           maxlength="16"
           value="{{familyName}}"

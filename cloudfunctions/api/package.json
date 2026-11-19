@@ -1,7 +1,7 @@
 {
   "name": "api",
   "version": "1.0.0",
-  "description": "樾哥厨房 云函数（统一入口）",
+  "description": "索玛家常菜 云函数（统一入口）",
   "main": "index.js",
   "dependencies": {
     "wx-server-sdk": "~3.0.1"

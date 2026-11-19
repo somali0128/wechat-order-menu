@@ -3,10 +3,10 @@
  * CLOUD_ENV_ID：微信开发者工具 → 云开发 → 设置 → 环境 ID
  */
 module.exports = {
-  CLOUD_ENV_ID: "your-cloud-env-id",
+  CLOUD_ENV_ID: "cloudbase-d7gfqekry71bb2748",
 
   // 小程序显示名称（页面标题、分享文案会用到）
-  APP_NAME: "樾哥厨房",
+  APP_NAME: "索玛家常菜",
 
   // 菜单页顶部随机展示的小标语
   SLOGANS: [

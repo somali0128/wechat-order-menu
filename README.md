@@ -1,4 +1,4 @@
-# 樾哥厨房 · 家庭点菜微信小程序
+# 索玛家常菜 · 家庭点菜微信小程序
 
 家人共用一份菜单：挑菜 → 核对食材 → 下单 → 采购 → 做饭 → 开饭，全家实时看到进度。
 
@@ -49,10 +49,10 @@
 
 ## 你需要手动填写的内容
 
-| 内容 | 位置 | 是否必填 |
+| 内容 | 位置 | 状态 |
 |---|---|---|
-| 小程序 AppID | `project.config.json` 的 `appid`（或导入项目时填写） | 必填 |
-| 云开发环境 ID | `miniprogram/utils/config.js` 的 `CLOUD_ENV_ID` | 必填 |
+| 小程序 AppID | `project.config.json` 的 `appid`（或导入项目时填写） | 已填写 |
+| 云开发环境 ID | `miniprogram/utils/config.js` 的 `CLOUD_ENV_ID` | 已填写 |
 | 小程序名称 / 菜单页标语 | `miniprogram/utils/config.js` 的 `APP_NAME`、`SLOGANS` | 可选 |
 | 订阅消息模板 | `cloudfunctions/api/settings.js` | 可选 |
 | 示例菜单 | `cloudfunctions/api/seed.js`，或上线后在小程序「我的 → 菜品管理」里维护 | 可选 |
@@ -70,7 +70,7 @@
 
 1. 开发者工具 → 导入项目 → 选择本仓库根目录 → 填入 AppID。
 2. 点击工具栏「云开发」→ 开通 → 创建环境，复制 **环境 ID**。
-3. 打开 `miniprogram/utils/config.js`，把 `CLOUD_ENV_ID` 改成你的环境 ID。
+3. `miniprogram/utils/config.js` 中已填写环境 ID `cloudbase-d7gfqekry71bb2748`，确认开发者工具右上角选中的是这个环境。
 
 ### 3. 部署云函数
 

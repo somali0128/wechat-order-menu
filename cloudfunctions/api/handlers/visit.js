@@ -35,7 +35,7 @@ function toggleName(list, name, add) {
 
 /** 记录来访：同一访客同一天合并为一条 */
 async function recordVisit(target, user, userFamily, change = {}) {
-  if (user.familyId && user.familyId === target._id) {
+  if (!user || (user.familyId && user.familyId === target._id)) {
     return;
   }
   const now = Date.now();
@@ -73,25 +73,28 @@ function visitorDish(dish, likedSet, copiedSet) {
 }
 
 async function visitFamily({ openid, data }) {
-  const { user, family: mine } = await loadContext(openid, { requireFamily: false });
+  // 匿名访问（朋友圈单页模式）：只读，不记录来访
+  const context = openid ? await loadContext(openid, { requireFamily: false }) : { user: null, family: null };
+  const { user, family: mine } = context;
   const target = await findByVisitCode(data.code);
-  if (mine && mine._id === target._id) {
-    return { isMine: true };
-  }
+  const isMine = Boolean(mine && mine._id === target._id);
 
   const [dishes, likes, members, copies] = await Promise.all([
     getAll(COLLECTIONS.dishes, { familyId: target._id }),
-    getAll(COLLECTIONS.likes, { familyId: target._id, openid }),
+    openid ? getAll(COLLECTIONS.likes, { familyId: target._id, openid }) : Promise.resolve([]),
     db.collection(COLLECTIONS.users).where({ familyId: target._id }).count(),
-    mine ? getAll(COLLECTIONS.dishes, { familyId: mine._id, sourceFamilyId: target._id }) : Promise.resolve([])
+    mine && !isMine ? getAll(COLLECTIONS.dishes, { familyId: mine._id, sourceFamilyId: target._id }) : Promise.resolve([])
   ]);
-  await recordVisit(target, user, mine);
+  if (!isMine) {
+    await recordVisit(target, user, mine);
+  }
 
   const likedSet = new Set(likes.map((item) => item.dishId));
   const copiedSet = new Set(copies.map((item) => item.sourceDishId));
   return {
-    isMine: false,
-    canCopy: Boolean(mine),
+    isMine,
+    anonymous: !openid,
+    canCopy: Boolean(mine) && !isMine,
     family: {
       name: target.name,
       visitCode: target.visitCode,

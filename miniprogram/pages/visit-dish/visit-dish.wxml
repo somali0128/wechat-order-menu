@@ -59,7 +59,7 @@
     <view class="safe-bottom"></view>
   </view>
 
-  <view class="bottom-bar">
+  <view wx:if="{{!isMine}}" class="bottom-bar">
     <view class="btn plain like-btn {{dish.liked ? 'liked' : ''}}" hover-class="btn-hover" bindtap="like">
       {{dish.liked ? '♥ 已赞' : '♡ 点赞'}}
     </view>

@@ -41,12 +41,15 @@ const handlers = {
   listVisitors: visit.listVisitors
 };
 
+// 无需登录即可调用的接口（朋友圈单页模式下拿不到 openid）
+const PUBLIC_ACTIONS = ["visitFamily"];
+
 exports.main = async (event) => {
   const { OPENID } = cloud.getWXContext();
   const action = event && event.action;
   const handler = handlers[action];
 
-  if (!OPENID) {
+  if (!OPENID && !PUBLIC_ACTIONS.includes(action)) {
     return { ok: false, code: "NO_OPENID", message: "请在小程序内使用" };
   }
   if (!handler) {
@@ -54,7 +57,7 @@ exports.main = async (event) => {
   }
 
   try {
-    const data = await handler({ openid: OPENID, data: (event && event.data) || {} });
+    const data = await handler({ openid: OPENID || "", data: (event && event.data) || {} });
     return { ok: true, data };
   } catch (error) {
     if (error && error.isBiz) {

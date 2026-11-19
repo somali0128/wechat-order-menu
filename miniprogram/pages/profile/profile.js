@@ -2,6 +2,7 @@ const api = require("../../utils/api");
 const session = require("../../utils/session");
 const cart = require("../../utils/cart");
 const subscribe = require("../../utils/subscribe");
+const share = require("../../utils/share");
 const { toast, confirm, prompt, actionSheet } = require("../../utils/ui");
 const { APP_NAME } = require("../../utils/config");
 
@@ -28,6 +29,7 @@ Page({
     const s = await session.requireFamily();
     if (!s) return;
     cart.updateBadge();
+    share.prepare();
     this.setData({
       user: decorateUser(s.user),
       family: s.family,
@@ -78,19 +80,22 @@ Page({
 
   onShareAppMessage(res) {
     const { family, user } = this.data;
+    const imageUrl = share.image();
     if (!family) {
-      return { title: APP_NAME, path: "/pages/menu/menu" };
+      return { title: APP_NAME, path: "/pages/menu/menu", imageUrl };
     }
     const type = res && res.target && res.target.dataset ? res.target.dataset.type : "";
     if (type === "visit") {
       return {
         title: `来「${family.name}」看看我们家的菜单`,
-        path: `/pages/visit-menu/visit-menu?code=${family.visitCode}`
+        path: `/pages/visit-menu/visit-menu?code=${family.visitCode}`,
+        imageUrl
       };
     }
     return {
       title: `${user.nickName || "家人"}邀请你加入「${family.name}」，一起点菜吧`,
-      path: `/pages/welcome/welcome?code=${family.inviteCode}`
+      path: `/pages/welcome/welcome?code=${family.inviteCode}`,
+      imageUrl
     };
   },
 
@@ -190,6 +195,10 @@ Page({
       this.setData({ "family.openBrowse": !open });
       toast(error.message);
     }
+  },
+
+  shareTimeline() {
+    wx.navigateTo({ url: `/pages/visit-menu/visit-menu?code=${this.data.family.visitCode}` });
   },
 
   goVisit() {

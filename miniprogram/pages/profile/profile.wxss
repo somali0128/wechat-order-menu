@@ -179,3 +179,18 @@
   font-size: 22rpx;
   text-align: right;
 }
+
+.visit-links {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 16rpx;
+  font-size: 24rpx;
+}
+
+.visit-link {
+  color: var(--blue);
+}
+
+.visit-link.muted {
+  color: var(--text-3);
+}

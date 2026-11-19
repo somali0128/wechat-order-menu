@@ -11,8 +11,10 @@
         <view class="banner-title ellipsis">🏠 {{family.name}}</view>
         <view class="banner-sub">{{family.dishCount}} 道菜 · {{family.memberCount}} 位成员</view>
       </view>
-      <text class="tag blue">来访中</text>
+      <text class="tag {{isMine ? 'orange' : 'blue'}}">{{isMine ? '预览' : '来访中'}}</text>
     </view>
+    <view wx:if="{{isMine}}" class="notice">这是别人看到的样子。点右上角「···」可以发给好友或分享到朋友圈</view>
+    <view wx:elif="{{readonly}}" class="notice">点击屏幕下方「前往小程序」，就能点赞和把菜加入自己的菜谱</view>
     <scroll-view class="chips" scroll-x enhanced show-scrollbar="{{false}}">
       <view
         wx:for="{{categories}}"
@@ -50,6 +52,7 @@
               <text>{{item.likeCount || '赞'}}</text>
             </view>
             <view
+              wx:if="{{!isMine}}"
               class="collect {{item.copied ? 'done' : ''}}"
               hover-class="btn-hover"
               data-id="{{item.id}}"

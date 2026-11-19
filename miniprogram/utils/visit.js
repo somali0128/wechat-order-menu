@@ -31,11 +31,8 @@ async function open(rawCode) {
   const code = normalizeCode(rawCode);
   try {
     const res = await api.call("visitFamily", { code });
-    if (res.isMine) {
-      return res;
-    }
     current = { ...res, code, dishes: res.dishes.map(menu.decorate) };
-    remember(code, res.family.name);
+    if (!res.isMine) remember(code, res.family.name);
     return current;
   } catch (error) {
     if (error.code === "BAD_CODE") forget(code);

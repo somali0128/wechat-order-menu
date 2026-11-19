@@ -136,3 +136,13 @@
   font-size: 22rpx;
   text-align: center;
 }
+
+.notice {
+  margin: 12rpx 24rpx 0;
+  padding: 16rpx 20rpx;
+  border-radius: 12rpx;
+  color: var(--primary-dark);
+  background: var(--primary-light);
+  font-size: 24rpx;
+  line-height: 1.5;
+}

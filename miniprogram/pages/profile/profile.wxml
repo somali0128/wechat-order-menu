@@ -90,7 +90,10 @@
         </button>
       </view>
     </view>
-    <view wx:if="{{family.isOwner}}" class="reset" bindtap="resetVisitCode">重置访问码</view>
+    <view class="visit-links">
+      <view class="visit-link" bindtap="shareTimeline">预览 / 发朋友圈 ›</view>
+      <view wx:if="{{family.isOwner}}" class="visit-link muted" bindtap="resetVisitCode">重置访问码</view>
+    </view>
 
     <view class="switch-row">
       <view class="flex1">

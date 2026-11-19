@@ -60,7 +60,13 @@ Page({
         name: dish.name,
         image: dish.image,
         category: dish.category,
-        sub: `${dish.ingredients.length} 种食材${dish.orderCount ? ` · 点过 ${dish.orderCount} 次` : ""}`
+        sub: [
+          `${dish.ingredients.length} 种食材`,
+          dish.orderCount ? `点过 ${dish.orderCount} 次` : "",
+          dish.likeCount ? `获赞 ${dish.likeCount}` : ""
+        ]
+          .filter(Boolean)
+          .join(" · ")
       }));
     this.setData({ list });
   },

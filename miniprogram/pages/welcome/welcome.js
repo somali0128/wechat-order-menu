@@ -72,6 +72,10 @@ Page({
     this.setData({ withSample: event.detail.value });
   },
 
+  goVisit() {
+    wx.navigateTo({ url: "/pages/visit/visit" });
+  },
+
   async submit() {
     if (this.data.submitting) return;
     const { mode, nickName, avatar, familyName, code, withSample } = this.data;

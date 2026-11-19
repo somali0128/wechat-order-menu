@@ -1,0 +1,70 @@
+.summary {
+  margin-bottom: 12rpx;
+  padding: 0 8rpx;
+  color: var(--text-2);
+  font-size: 26rpx;
+}
+
+.summary-num {
+  color: var(--primary-dark);
+  font-size: 34rpx;
+  font-weight: 700;
+}
+
+.group-title {
+  padding: 16rpx 8rpx;
+  color: var(--text-3);
+  font-size: 24rpx;
+}
+
+.visitor {
+  display: flex;
+  gap: 20rpx;
+  padding: 24rpx 28rpx;
+  border-bottom: 2rpx solid var(--border);
+}
+
+.visitor:last-child {
+  border-bottom: none;
+}
+
+.visitor .avatar {
+  width: 80rpx;
+  height: 80rpx;
+  font-size: 32rpx;
+}
+
+.name {
+  flex: 1;
+  min-width: 0;
+  font-size: 30rpx;
+  font-weight: 600;
+}
+
+.time {
+  flex-shrink: 0;
+  margin-left: 16rpx;
+  color: var(--text-3);
+  font-size: 22rpx;
+}
+
+.from {
+  margin-top: 2rpx;
+  color: var(--text-3);
+  font-size: 22rpx;
+}
+
+.action {
+  margin-top: 10rpx;
+  color: var(--text-2);
+  font-size: 24rpx;
+  line-height: 1.6;
+}
+
+.action.like {
+  color: var(--red);
+}
+
+.action.copy {
+  color: var(--green);
+}

@@ -6,7 +6,9 @@ const COLLECTIONS = {
   users: "users",
   families: "families",
   dishes: "dishes",
-  orders: "orders"
+  orders: "orders",
+  likes: "likes",
+  visits: "visits"
 };
 
 let collectionsReady = false;

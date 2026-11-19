@@ -17,6 +17,7 @@
         <text wx:if="{{dish.cookTime}}" class="tag blue">⏱ {{dish.cookTime}}</text>
         <text wx:for="{{dish.tags}}" wx:key="*this" class="tag orange">{{item}}</text>
       </view>
+      <view wx:if="{{dish.sourceFamilyName}}" class="source">📥 收藏自「{{dish.sourceFamilyName}}」</view>
       <view wx:if="{{dish.description}}" class="desc">{{dish.description}}</view>
 
       <view class="stats">
@@ -31,6 +32,10 @@
         <view class="stat">
           <view class="stat-value">{{dish.orderCount}} 次</view>
           <view class="stat-label">点过</view>
+        </view>
+        <view class="stat">
+          <view class="stat-value">{{dish.likeCount || 0}}</view>
+          <view class="stat-label">访客点赞</view>
         </view>
       </view>
     </view>

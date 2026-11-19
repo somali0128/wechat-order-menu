@@ -3,6 +3,7 @@ const user = require("./handlers/user");
 const family = require("./handlers/family");
 const dish = require("./handlers/dish");
 const order = require("./handlers/order");
+const visit = require("./handlers/visit");
 
 const handlers = {
   login: user.login,
@@ -13,6 +14,8 @@ const handlers = {
   getFamily: family.getFamily,
   updateFamily: family.updateFamily,
   resetInviteCode: family.resetInviteCode,
+  resetVisitCode: family.resetVisitCode,
+  setOpenBrowse: family.setOpenBrowse,
   removeMember: family.removeMember,
   transferOwner: family.transferOwner,
   leaveFamily: family.leaveFamily,
@@ -29,7 +32,13 @@ const handlers = {
   getOrder: order.getOrder,
   updateOrderStatus: order.updateOrderStatus,
   toggleIngredient: order.toggleIngredient,
-  deleteOrder: order.deleteOrder
+  deleteOrder: order.deleteOrder,
+
+  visitFamily: visit.visitFamily,
+  toggleLike: visit.toggleLike,
+  copyDish: visit.copyDish,
+  recommendFamilies: visit.recommendFamilies,
+  listVisitors: visit.listVisitors
 };
 
 exports.main = async (event) => {

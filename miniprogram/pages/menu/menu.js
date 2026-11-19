@@ -151,6 +151,10 @@ Page({
     wx.switchTab({ url: "/pages/cart/cart" });
   },
 
+  goVisit() {
+    wx.navigateTo({ url: "/pages/visit/visit" });
+  },
+
   goAdd() {
     wx.navigateTo({ url: "/pages/dish-edit/dish-edit" });
   }

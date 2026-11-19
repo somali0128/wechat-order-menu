@@ -1,0 +1,18 @@
+@import "../dish/dish.wxss";
+
+.from {
+  padding: 8rpx 0 24rpx;
+  color: var(--text-3);
+  font-size: 22rpx;
+  text-align: center;
+}
+
+.bottom-bar .like-btn {
+  flex: 0 0 220rpx;
+}
+
+.like-btn.liked {
+  border-color: #f6c1c3;
+  color: var(--red);
+  background: var(--red-light);
+}

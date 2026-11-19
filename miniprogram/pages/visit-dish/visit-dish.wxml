@@ -1,0 +1,69 @@
+<view wx:if="{{loading}}" class="state-text">正在加载...</view>
+
+<empty-state wx:elif="{{!dish}}" icon="🍽" title="{{errorText || '菜品不存在'}}">
+  <view class="btn small ghost" hover-class="btn-hover" bindtap="back">返回</view>
+</empty-state>
+
+<view wx:else class="page">
+  <view class="cover" bindtap="preview">
+    <dish-cover image="{{dish.image}}" name="{{dish.name}}" width="{{750}}" height="{{500}}" radius="{{0}}" />
+  </view>
+
+  <view class="container content">
+    <view class="card info">
+      <view class="name">{{dish.name}}</view>
+      <view class="tags">
+        <text class="tag">{{dish.category}}</text>
+        <text wx:if="{{dish.cookTime}}" class="tag blue">⏱ {{dish.cookTime}}</text>
+        <text wx:for="{{dish.tags}}" wx:key="*this" class="tag orange">{{item}}</text>
+      </view>
+      <view wx:if="{{dish.description}}" class="desc">{{dish.description}}</view>
+      <view class="stats">
+        <view class="stat">
+          <view class="stat-value">{{dish.calories || '—'}}</view>
+          <view class="stat-label">热量</view>
+        </view>
+        <view class="stat">
+          <view class="stat-value">{{dish.protein || '—'}}</view>
+          <view class="stat-label">蛋白质</view>
+        </view>
+        <view class="stat">
+          <view class="stat-value">{{dish.likeCount}}</view>
+          <view class="stat-label">获赞</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="card">
+      <view class="card-head">
+        <view class="card-title">所需食材</view>
+        <view class="card-extra">{{dish.ingredients.length}} 种</view>
+      </view>
+      <view class="tags">
+        <text wx:for="{{dish.ingredients}}" wx:key="*this" class="ingredient">{{item}}</text>
+      </view>
+    </view>
+
+    <view class="card">
+      <view class="card-head">
+        <view class="card-title">做法</view>
+      </view>
+      <view wx:if="{{!steps.length}}" class="muted">主人还没有写做法。</view>
+      <view wx:for="{{steps}}" wx:key="index" class="step">
+        <view class="step-no">{{index + 1}}</view>
+        <view class="step-text">{{item}}</view>
+      </view>
+    </view>
+
+    <view class="from">来自「{{familyName}}」的菜单</view>
+    <view class="safe-bottom"></view>
+  </view>
+
+  <view class="bottom-bar">
+    <view class="btn plain like-btn {{dish.liked ? 'liked' : ''}}" hover-class="btn-hover" bindtap="like">
+      {{dish.liked ? '♥ 已赞' : '♡ 点赞'}}
+    </view>
+    <view wx:if="{{dish.copied}}" class="btn ghost" hover-class="btn-hover" bindtap="copy">✓ 已加入我的菜谱</view>
+    <view wx:else class="btn" hover-class="btn-hover" bindtap="copy">+ 加入我的菜谱</view>
+  </view>
+</view>

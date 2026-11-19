@@ -6,6 +6,7 @@
         <view class="slogan ellipsis">{{slogan}}</view>
       </view>
       <view class="family ellipsis">🏠 {{familyName}}</view>
+      <view class="visit-btn" hover-class="btn-hover" bindtap="goVisit">串门</view>
     </view>
     <view class="search">
       <view class="search-icon"></view>

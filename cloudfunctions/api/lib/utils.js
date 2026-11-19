@@ -56,6 +56,11 @@ function formatCnTime(ts = Date.now()) {
   return `${d.getUTCFullYear()}-${pad(d.getUTCMonth() + 1)}-${pad(d.getUTCDate())} ${pad(d.getUTCHours())}:${pad(d.getUTCMinutes())}`;
 }
 
+function cnDateKey(ts = Date.now()) {
+  const d = cnDate(ts);
+  return `${d.getUTCFullYear()}-${pad(d.getUTCMonth() + 1)}-${pad(d.getUTCDate())}`;
+}
+
 function makeOrderNo(ts = Date.now()) {
   const d = cnDate(ts);
   const rand = Math.floor(Math.random() * 9000 + 1000);
@@ -78,6 +83,7 @@ module.exports = {
   int,
   cnDate,
   formatCnTime,
+  cnDateKey,
   makeOrderNo,
   isCloudFile,
   truncate

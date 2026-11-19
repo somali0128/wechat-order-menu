@@ -18,6 +18,8 @@ function publicDish(dish) {
     steps: dish.steps || "",
     image: dish.image || "",
     orderCount: dish.orderCount || 0,
+    likeCount: Math.max(0, dish.likeCount || 0),
+    sourceFamilyName: dish.sourceFamilyName || "",
     updatedAt: dish.updatedAt || 0
   };
 }
@@ -107,6 +109,7 @@ async function saveDish({ openid, data }) {
         ...dish,
         familyId: family._id,
         orderCount: 0,
+        likeCount: 0,
         createdBy: openid,
         createdAt: now,
         updatedAt: now
@@ -123,6 +126,7 @@ async function removeDish({ openid, data }) {
   const { family } = await loadContext(openid);
   const dish = await requireDish(family, data.id);
   await db.collection(COLLECTIONS.dishes).doc(dish._id).remove();
+  await db.collection(COLLECTIONS.likes).where({ dishId: dish._id }).remove();
   await deleteFiles([dish.image]);
   return true;
 }
@@ -175,5 +179,7 @@ module.exports = {
   removeDish,
   saveCategories,
   renameCategory,
-  publicDish
+  publicDish,
+  mergeCategories,
+  addCategoryIfMissing
 };

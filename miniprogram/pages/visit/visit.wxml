@@ -1,0 +1,66 @@
+<view class="container">
+  <view class="card">
+    <view class="card-head">
+      <view class="card-title">输入访问码</view>
+      <view class="card-extra">只能看菜单，不会看到订单</view>
+    </view>
+    <view class="code-row">
+      <input
+        class="input-box code-input flex1"
+        placeholder="6 位访问码"
+        placeholder-class="placeholder"
+        maxlength="6"
+        value="{{code}}"
+        confirm-type="go"
+        bindinput="onCodeInput"
+        bindconfirm="go"
+      />
+      <view class="btn go-btn {{code.length < 6 ? 'disabled' : ''}}" hover-class="btn-hover" bindtap="go">去看看</view>
+    </view>
+    <view class="tip">访问码在对方「我的」页面里，和邀请码不是同一个。</view>
+  </view>
+
+  <view wx:if="{{recent.length}}" class="card">
+    <view class="card-head">
+      <view class="card-title">最近去过</view>
+    </view>
+    <view class="recent">
+      <view
+        wx:for="{{recent}}"
+        wx:key="code"
+        class="recent-item"
+        hover-class="btn-hover"
+        data-code="{{item.code}}"
+        bindtap="openItem"
+      >🏠 {{item.name}}</view>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="card-head">
+      <view class="card-title">开放浏览的家庭</view>
+      <view class="card-link" bindtap="loadRecommends">换一批</view>
+    </view>
+    <view wx:if="{{loadingRecommends}}" class="state-text small">正在寻找...</view>
+    <view wx:elif="{{!recommends.length}}" class="state-text small">暂时还没有开放浏览的家庭</view>
+    <view
+      wx:for="{{recommends}}"
+      wx:key="visitCode"
+      class="family"
+      hover-class="cell-hover"
+      data-code="{{item.visitCode}}"
+      bindtap="openItem"
+    >
+      <view class="previews">
+        <view wx:for="{{item.previews}}" wx:for-item="dish" wx:key="name" class="preview">
+          <dish-cover image="{{dish.image}}" name="{{dish.name}}" width="{{96}}" height="{{96}}" radius="{{12}}" />
+        </view>
+      </view>
+      <view class="family-body">
+        <view class="family-name ellipsis">{{item.name}}</view>
+        <view class="family-sub">{{item.dishCount}} 道菜</view>
+      </view>
+      <view class="cell-arrow"></view>
+    </view>
+  </view>
+</view>

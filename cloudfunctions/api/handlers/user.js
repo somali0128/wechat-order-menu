@@ -4,6 +4,7 @@ const { str, isCloudFile } = require("../lib/utils");
 const { checkText } = require("../lib/security");
 const { fail } = require("../lib/errors");
 const settings = require("../settings");
+const { ensureVisitCode } = require("../lib/codes");
 
 function publicUser(user, openid) {
   return {
@@ -19,6 +20,8 @@ function publicFamily(family, openid) {
     id: family._id,
     name: family.name,
     inviteCode: family.inviteCode,
+    visitCode: family.visitCode || "",
+    openBrowse: Boolean(family.openBrowse),
     isOwner: family.ownerOpenid === openid,
     categories: family.categories || []
   };
@@ -50,7 +53,9 @@ async function login({ openid }) {
   let family = null;
   if (user.familyId) {
     family = await getById(COLLECTIONS.families, user.familyId);
-    if (!family) {
+    if (family) {
+      await ensureVisitCode(family);
+    } else {
       // 家庭已解散
       await db.collection(COLLECTIONS.users).doc(openid).update({ data: { familyId: "" } });
       user.familyId = "";

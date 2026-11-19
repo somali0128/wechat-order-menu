@@ -47,7 +47,7 @@
       </view>
       <view class="invite-actions">
         <view class="btn small plain" hover-class="btn-hover" bindtap="copyCode">复制</view>
-        <button class="btn-reset" open-type="share">
+        <button class="btn-reset" open-type="share" data-type="invite">
           <view class="btn small" hover-class="btn-hover">邀请家人</view>
         </button>
       </view>
@@ -71,6 +71,38 @@
     </view>
   </view>
 
+  <!-- 来访 -->
+  <view class="card">
+    <view class="card-head">
+      <view class="card-title">来访</view>
+      <view class="card-link" bindtap="goVisitors">谁来过{{stats.visitorsToday ? ' · 今日 ' + stats.visitorsToday : ''}} ›</view>
+    </view>
+
+    <view class="invite visit">
+      <view class="flex1">
+        <view class="invite-label">访问码 · 只能看菜单</view>
+        <view class="invite-code visit-code">{{family.visitCode}}</view>
+      </view>
+      <view class="invite-actions">
+        <view class="btn small plain" hover-class="btn-hover" bindtap="copyVisitCode">复制</view>
+        <button class="btn-reset" open-type="share" data-type="visit">
+          <view class="btn small visit-share" hover-class="btn-hover">分享菜单</view>
+        </button>
+      </view>
+    </view>
+    <view wx:if="{{family.isOwner}}" class="reset" bindtap="resetVisitCode">重置访问码</view>
+
+    <view class="switch-row">
+      <view class="flex1">
+        <view class="switch-title">开放浏览</view>
+        <view class="switch-desc">开启后，你家菜单会出现在别人「串门」的随机推荐里</view>
+      </view>
+      <switch wx:if="{{family.isOwner}}" checked="{{family.openBrowse}}" color="#ff8a1f" bindchange="onOpenBrowseChange" />
+      <text wx:else class="tag {{family.openBrowse ? 'green' : 'gray'}}">{{family.openBrowse ? '已开启' : '未开启'}}</text>
+    </view>
+    <view wx:if="{{!family.isOwner}}" class="switch-note">只有管理员可以修改</view>
+  </view>
+
   <!-- 功能入口 -->
   <view class="card flush">
     <view class="cell" hover-class="cell-hover" bindtap="goManage">
@@ -82,6 +114,17 @@
     <view class="cell" hover-class="cell-hover" bindtap="goCategories">
       <text class="cell-icon">🗂</text>
       <text class="cell-title">分类管理</text>
+      <view class="cell-arrow"></view>
+    </view>
+    <view class="cell" hover-class="cell-hover" bindtap="goVisit">
+      <text class="cell-icon">🚪</text>
+      <text class="cell-title">去别人家逛逛</text>
+      <view class="cell-arrow"></view>
+    </view>
+    <view class="cell" hover-class="cell-hover" bindtap="goVisitors">
+      <text class="cell-icon">👀</text>
+      <text class="cell-title">谁来过</text>
+      <text class="cell-value">{{stats.visitorsToday ? '今日 ' + stats.visitorsToday + ' 位' : ''}}</text>
       <view class="cell-arrow"></view>
     </view>
     <view wx:if="{{subscribeEnabled}}" class="cell" hover-class="cell-hover" bindtap="subscribeNotice">
@@ -99,7 +142,7 @@
 
   <view class="card flush">
     <view class="cell leave" hover-class="cell-hover" bindtap="leave">
-      <text class="cell-title">{{family.isOwner && stats.members <= 1 ? '解散家庭' : '退出家庭'}}</text>
+      <text class="cell-title">{{leaveText}}</text>
     </view>
   </view>
 </view>

@@ -18,8 +18,9 @@ Page({
     user: null,
     family: null,
     members: [],
-    stats: { dishes: 0, orders: 0, active: 0, members: 0 },
+    stats: { dishes: 0, orders: 0, active: 0, members: 0, visitorsToday: 0 },
     subscribeEnabled: false,
+    leaveText: "退出家庭",
     loading: true
   },
 
@@ -48,6 +49,7 @@ Page({
         family: res.family,
         members: res.members.map((member) => ({ ...member, initial: initial(member.nickName) })),
         stats: res.stats,
+        leaveText: res.family.isOwner && res.stats.members <= 1 ? "解散家庭" : "退出家庭",
         user: decorateUser(session.get().user)
       });
     } catch (error) {
@@ -67,10 +69,24 @@ Page({
     });
   },
 
-  onShareAppMessage() {
+  copyVisitCode() {
+    wx.setClipboardData({
+      data: this.data.family.visitCode,
+      success: () => toast("访问码已复制", "success")
+    });
+  },
+
+  onShareAppMessage(res) {
     const { family, user } = this.data;
     if (!family) {
       return { title: APP_NAME, path: "/pages/menu/menu" };
+    }
+    const type = res && res.target && res.target.dataset ? res.target.dataset.type : "";
+    if (type === "visit") {
+      return {
+        title: `来「${family.name}」看看我们家的菜单`,
+        path: `/pages/visit-menu/visit-menu?code=${family.visitCode}`
+      };
     }
     return {
       title: `${user.nickName || "家人"}邀请你加入「${family.name}」，一起点菜吧`,
@@ -145,6 +161,43 @@ Page({
     } catch (error) {
       toast(error.message);
     }
+  },
+
+  async resetVisitCode() {
+    const ok = await confirm({
+      title: "重置访问码",
+      content: "重置后旧访问码和已分享的菜单链接将失效。"
+    });
+    if (!ok) return;
+    try {
+      const family = await api.call("resetVisitCode", {}, { loading: "正在重置" });
+      session.setFamily(family);
+      this.setData({ family });
+      toast("已重置", "success");
+    } catch (error) {
+      toast(error.message);
+    }
+  },
+
+  async onOpenBrowseChange(event) {
+    const open = event.detail.value;
+    try {
+      const family = await api.call("setOpenBrowse", { open }, { loading: "正在保存" });
+      session.setFamily(family);
+      this.setData({ family });
+      toast(open ? "已开启开放浏览" : "已关闭开放浏览", "none");
+    } catch (error) {
+      this.setData({ "family.openBrowse": !open });
+      toast(error.message);
+    }
+  },
+
+  goVisit() {
+    wx.navigateTo({ url: "/pages/visit/visit" });
+  },
+
+  goVisitors() {
+    wx.navigateTo({ url: "/pages/visitors/visitors" });
   },
 
   async subscribeNotice() {

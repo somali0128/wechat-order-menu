@@ -1,0 +1,40 @@
+<view class="container">
+  <view wx:if="{{loading}}" class="state-text">正在加载...</view>
+
+  <empty-state wx:elif="{{errorText}}" icon="⚠️" title="加载失败" desc="{{errorText}}">
+    <view class="btn small ghost" hover-class="btn-hover" bindtap="reload">重新加载</view>
+  </empty-state>
+
+  <empty-state
+    wx:elif="{{!groups.length}}"
+    icon="👀"
+    title="还没有人来过"
+    desc="把「我的」页里的访问码分享给朋友，或开启「开放浏览」，别人就能来看你家的菜单了"
+  />
+
+  <block wx:else>
+    <view class="summary">今天有 <text class="summary-num">{{todayCount}}</text> 位访客</view>
+
+    <view wx:for="{{groups}}" wx:for-item="group" wx:key="date" class="group">
+      <view class="group-title">{{group.title}}</view>
+      <view class="card flush">
+        <view wx:for="{{group.items}}" wx:key="id" class="visitor">
+          <image wx:if="{{item.avatar}}" class="avatar" src="{{item.avatar}}" mode="aspectFill" />
+          <view wx:else class="avatar avatar-text">{{item.initial}}</view>
+          <view class="flex1">
+            <view class="row between">
+              <view class="name ellipsis">{{item.name}}</view>
+              <view class="time">{{item.timeText}}</view>
+            </view>
+            <view class="from">{{item.familyName ? '来自「' + item.familyName + '」' : '还没有加入家庭'}}</view>
+            <view class="action">👀 浏览了菜单</view>
+            <view wx:if="{{item.likes.length}}" class="action like">♥ 赞了 {{item.likeText}}</view>
+            <view wx:if="{{item.copies.length}}" class="action copy">＋ 加入菜谱 {{item.copyText}}</view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="load-more">{{loadingMore ? '加载中...' : (hasMore ? '上拉加载更多' : '没有更多了')}}</view>
+  </block>
+</view>

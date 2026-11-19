@@ -1,0 +1,65 @@
+<view wx:if="{{loading && !family}}" class="state-text">正在打开菜单...</view>
+
+<empty-state wx:elif="{{!family}}" icon="🚪" title="打不开这个菜单" desc="{{errorText}}">
+  <view class="btn small ghost" hover-class="btn-hover" bindtap="back">返回</view>
+</empty-state>
+
+<block wx:else>
+  <view class="top">
+    <view class="banner">
+      <view class="flex1">
+        <view class="banner-title ellipsis">🏠 {{family.name}}</view>
+        <view class="banner-sub">{{family.dishCount}} 道菜 · {{family.memberCount}} 位成员</view>
+      </view>
+      <text class="tag blue">来访中</text>
+    </view>
+    <scroll-view class="chips" scroll-x enhanced show-scrollbar="{{false}}">
+      <view
+        wx:for="{{categories}}"
+        wx:key="*this"
+        class="chip {{active === item ? 'active' : ''}}"
+        data-name="{{item}}"
+        bindtap="selectCategory"
+      >{{item}}</view>
+    </scroll-view>
+  </view>
+
+  <view class="container">
+    <empty-state wx:if="{{!list.length}}" icon="🍽" title="这里还没有菜" />
+
+    <view wx:else class="card flush">
+      <view
+        wx:for="{{list}}"
+        wx:key="id"
+        class="dish"
+        hover-class="cell-hover"
+        data-id="{{item.id}}"
+        bindtap="openDish"
+      >
+        <dish-cover image="{{item.image}}" name="{{item.name}}" width="{{152}}" height="{{152}}" radius="{{16}}" />
+        <view class="dish-body">
+          <view class="dish-name ellipsis">{{item.name}}</view>
+          <view class="dish-desc ellipsis">{{item.description}}</view>
+          <view class="dish-tags">
+            <text wx:if="{{item.cookTime}}" class="tag blue">⏱ {{item.cookTime}}</text>
+            <text wx:for="{{item.tags}}" wx:for-item="tag" wx:key="*this" class="tag orange">{{tag}}</text>
+          </view>
+          <view class="dish-foot">
+            <view class="like {{item.liked ? 'on' : ''}}" data-id="{{item.id}}" catchtap="like">
+              <text class="heart">{{item.liked ? '♥' : '♡'}}</text>
+              <text>{{item.likeCount || '赞'}}</text>
+            </view>
+            <view
+              class="collect {{item.copied ? 'done' : ''}}"
+              hover-class="btn-hover"
+              data-id="{{item.id}}"
+              catchtap="copy"
+            >{{item.copied ? '✓ 已加入' : '+ 加入菜谱'}}</view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="footnote">来访只能浏览菜单，看不到这家的订单</view>
+  </view>
+</block>

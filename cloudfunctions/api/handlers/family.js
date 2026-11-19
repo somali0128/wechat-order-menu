@@ -5,23 +5,8 @@ const { checkText } = require("../lib/security");
 const { fail } = require("../lib/errors");
 const { publicFamily } = require("./user");
 const seed = require("../seed");
-
-const CODE_CHARS = "ABCDEFGHJKMNPQRSTUVWXYZ23456789";
-
-async function generateInviteCode() {
-  for (let i = 0; i < 10; i += 1) {
-    let code = "";
-    for (let j = 0; j < 6; j += 1) {
-      code += CODE_CHARS[Math.floor(Math.random() * CODE_CHARS.length)];
-    }
-    const exists = await db.collection(COLLECTIONS.families).where({ inviteCode: code }).count();
-    if (!exists.total) {
-      return code;
-    }
-  }
-  fail("邀请码生成失败，请重试");
-  return "";
-}
+const { generateCode, ensureVisitCode } = require("../lib/codes");
+const { cnDateKey } = require("../lib/utils");
 
 async function listMembers(family, openid) {
   const users = await getAll(COLLECTIONS.users, { familyId: family._id }, "joinedAt", "asc");
@@ -49,7 +34,9 @@ async function createFamily({ openid, data }) {
   const withSample = data.withSample !== false;
   const family = {
     name,
-    inviteCode: await generateInviteCode(),
+    inviteCode: await generateCode(),
+    visitCode: await generateCode(),
+    openBrowse: false,
     ownerOpenid: openid,
     categories: withSample ? [...seed.categories] : [],
     createdAt: now,
@@ -75,6 +62,7 @@ async function createFamily({ openid, data }) {
             steps: dish.steps || "",
             image: dish.image || "",
             orderCount: 0,
+            likeCount: 0,
             createdBy: openid,
             createdAt: now + index,
             updatedAt: now + index
@@ -100,7 +88,8 @@ async function joinFamily({ openid, data }) {
   const res = await db.collection(COLLECTIONS.families).where({ inviteCode: code }).limit(1).get();
   const family = res.data[0];
   if (!family) {
-    fail("邀请码无效，请向家人确认");
+    const visit = await db.collection(COLLECTIONS.families).where({ visitCode: code }).count();
+    fail(visit.total ? "这是访问码，只能浏览菜单；加入家庭需要邀请码" : "邀请码无效，请向家人确认");
   }
   if (user.familyId === family._id) {
     return publicFamily(family, openid);
@@ -117,14 +106,16 @@ async function joinFamily({ openid, data }) {
 
 async function getFamily({ openid }) {
   const { family } = await loadContext(openid);
-  const [members, dishCount, orderCount, activeCount] = await Promise.all([
+  await ensureVisitCode(family);
+  const [members, dishCount, orderCount, activeCount, visitorsToday] = await Promise.all([
     listMembers(family, openid),
     db.collection(COLLECTIONS.dishes).where({ familyId: family._id }).count(),
     db.collection(COLLECTIONS.orders).where({ familyId: family._id }).count(),
     db
       .collection(COLLECTIONS.orders)
       .where({ familyId: family._id, status: _.in(["pending", "shopping", "cooking"]) })
-      .count()
+      .count(),
+    db.collection(COLLECTIONS.visits).where({ familyId: family._id, date: cnDateKey() }).count()
   ]);
   return {
     family: publicFamily(family, openid),
@@ -133,7 +124,8 @@ async function getFamily({ openid }) {
       dishes: dishCount.total,
       orders: orderCount.total,
       active: activeCount.total,
-      members: members.length
+      members: members.length,
+      visitorsToday: visitorsToday.total
     }
   };
 }
@@ -150,11 +142,30 @@ async function updateFamily({ openid, data }) {
 
 async function resetInviteCode({ openid }) {
   const { family } = await loadContext(openid, { requireOwner: true });
-  const inviteCode = await generateInviteCode();
+  const inviteCode = await generateCode();
   await db.collection(COLLECTIONS.families).doc(family._id).update({
     data: { inviteCode, updatedAt: Date.now() }
   });
   return publicFamily({ ...family, inviteCode }, openid);
+}
+
+async function resetVisitCode({ openid }) {
+  const { family } = await loadContext(openid, { requireOwner: true });
+  const visitCode = await generateCode();
+  await db.collection(COLLECTIONS.families).doc(family._id).update({
+    data: { visitCode, updatedAt: Date.now() }
+  });
+  return publicFamily({ ...family, visitCode }, openid);
+}
+
+async function setOpenBrowse({ openid, data }) {
+  const { family } = await loadContext(openid, { requireOwner: true });
+  const openBrowse = Boolean(data.open);
+  await ensureVisitCode(family);
+  await db.collection(COLLECTIONS.families).doc(family._id).update({
+    data: { openBrowse, updatedAt: Date.now() }
+  });
+  return publicFamily({ ...family, openBrowse }, openid);
 }
 
 async function requireMember(family, target) {
@@ -194,6 +205,8 @@ async function dissolveFamily(family) {
   await deleteFiles(dishes.map((dish) => dish.image));
   await db.collection(COLLECTIONS.dishes).where({ familyId: family._id }).remove();
   await db.collection(COLLECTIONS.orders).where({ familyId: family._id }).remove();
+  await db.collection(COLLECTIONS.likes).where({ familyId: family._id }).remove();
+  await db.collection(COLLECTIONS.visits).where({ familyId: family._id }).remove();
   await db.collection(COLLECTIONS.families).doc(family._id).remove();
 }
 
@@ -223,6 +236,8 @@ module.exports = {
   getFamily,
   updateFamily,
   resetInviteCode,
+  resetVisitCode,
+  setOpenBrowse,
   removeMember,
   transferOwner,
   leaveFamily

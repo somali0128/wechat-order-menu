@@ -36,12 +36,23 @@ page {
 
 .family {
   flex-shrink: 0;
-  max-width: 240rpx;
+  max-width: 220rpx;
   height: 52rpx;
   padding: 0 20rpx;
   border-radius: 26rpx;
   color: var(--primary-dark);
   background: var(--primary-light);
+  font-size: 24rpx;
+  line-height: 52rpx;
+}
+
+.visit-btn {
+  flex-shrink: 0;
+  height: 52rpx;
+  padding: 0 20rpx;
+  border-radius: 26rpx;
+  color: var(--blue);
+  background: var(--blue-light);
   font-size: 24rpx;
   line-height: 52rpx;
 }

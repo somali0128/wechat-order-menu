@@ -10,7 +10,11 @@
     "pages/manage/manage",
     "pages/dish-edit/dish-edit",
     "pages/categories/categories",
-    "pages/user-edit/user-edit"
+    "pages/user-edit/user-edit",
+    "pages/visit/visit",
+    "pages/visit-menu/visit-menu",
+    "pages/visit-dish/visit-dish",
+    "pages/visitors/visitors"
   ],
   "window": {
     "navigationBarTitleText": "索玛家常菜",

@@ -91,6 +91,7 @@ function setCategoriesLocal(categories) {
 }
 
 module.exports = {
+  decorate,
   peek,
   fetch,
   ensure,

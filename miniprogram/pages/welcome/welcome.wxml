@@ -91,5 +91,6 @@
     <view class="btn block submit {{submitting ? 'disabled' : ''}}" hover-class="btn-hover" bindtap="submit">
       {{mode === 'create' ? '创建家庭' : '加入家庭'}}
     </view>
+    <view class="visit-link" bindtap="goVisit">没有邀请码？先去别人家逛逛 ›</view>
   </block>
 </view>

@@ -134,3 +134,10 @@ button.avatar-btn {
 .retry {
   margin-top: 32rpx;
 }
+
+.visit-link {
+  padding: 32rpx 0 8rpx;
+  color: var(--text-2);
+  font-size: 26rpx;
+  text-align: center;
+}
